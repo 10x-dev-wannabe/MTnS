@@ -1,0 +1,14 @@
+{
+  "bin": {
+    "MTsettings": "./bin/settings.js",
+    "MTadd" : "./bin/add.js"
+  },
+  "name": "MTnS",
+  "version": "0.1.0",
+  "main": "bin/main.js",
+  "author": "dev10x <dev10xattempt@yahoo.com>",
+  "license": "MIT",
+  "dependencies": {
+    "yargs": "^17.7.2"
+  }
+}
