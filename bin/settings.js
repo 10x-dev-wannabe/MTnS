@@ -5,7 +5,7 @@ var argv = require("yargs/yargs")(process.argv.slice(2))
   .argv;
 
 console.log(argv)
-
+//TODO: add documentation for --help
 
 settingsPath =`${__dirname}/../settings.json`;
 settings = fs.readFileSync(settingsPath); 

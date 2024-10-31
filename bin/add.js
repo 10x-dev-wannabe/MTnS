@@ -4,9 +4,9 @@ var fs = require("node:fs")
 var argv = require("yargs/yargs")(process.argv.slice(2))
   
   .argv;
+//TODO: add help for --help
 
-
-console.log(argv);
+//console.log(argv);
 
 function fileToObject(path) {
   let data;
