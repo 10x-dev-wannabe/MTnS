@@ -1,20 +1,37 @@
 #!/usr/bin/env node
 fs = require("node:fs")
 var argv = require("yargs/yargs")(process.argv.slice(2))
-  
-  .argv;
+  .option('d',{
+    alias: 'default',
+    describe: 'set the default file to add purchases',
+    type: 'string',
+    nargs: 1
+  })
+  .option('n', {
+    alias: 'new',
+    describe: 'make a new file',
+    type: 'string',
+    nargs: 1
+  })
+  .option('l', {
+    alias: 'list',
+    describe: 'list all files',
+    nargs: 0
+  })
+  .argv
 
 console.log(argv)
-//TODO: add documentation for --help
 
+// Import settings
 settingsPath =`${__dirname}/../settings.json`;
 settings = fs.readFileSync(settingsPath); 
 settings = JSON.parse(settings);
 
-if(argv._[0] === "set-default") {
-  if (fs.existsSync(`${__dirname}/../appdata/${argv._[1]}`)){
+// Set default
+if(argv.d != undefined) {
+  if (fs.existsSync(`${__dirname}/../appdata/${argv.d}`)){
     try {
-      settings.default = argv._[1]; 
+      settings.default = argv.d; 
     } catch {
       console.log("invalid name")
     }
@@ -29,14 +46,8 @@ if(argv._[0] === "set-default") {
   }
 };
 
-if(argv._[0] === "list-files") {
-  fs.readdir(`${__dirname}/../appdata/`, (err, files) => {
-    files.forEach(file => {
-      console.log(file)
-    })
-})};
-
-if (argv._[0] === "new-dir") {
+// New file
+if (argv.n != undefined) {
   if(!fs.existsSync(`${__dirname}/../appdata/${argv._[1]}`)){
     fs.mkdirSync(`${__dirname}/../appdata/${argv._[1]}`);
   } else {
@@ -44,3 +55,10 @@ if (argv._[0] === "new-dir") {
   }
 }
 
+// List files
+if(argv.l != undefined) {
+  fs.readdir(`${__dirname}/../appdata/`, (err, files) => {
+    files.forEach(file => {
+      console.log(file)
+    })
+})};
