@@ -48,8 +48,8 @@ if(argv.d != undefined) {
 
 // New file
 if (argv.n != undefined) {
-  if(!fs.existsSync(`${__dirname}/../appdata/${argv._[1]}`)){
-    fs.mkdirSync(`${__dirname}/../appdata/${argv._[1]}`);
+  if(!fs.existsSync(`${__dirname}/../appdata/${argv.n}`)){
+    fs.mkdirSync(`${__dirname}/../appdata/${argv.n}`);
   } else {
     console.log("dir already exists!");
   }
