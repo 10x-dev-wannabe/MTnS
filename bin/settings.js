@@ -1,5 +1,8 @@
 #!/usr/bin/env node
-fs = require("node:fs")
+
+const fs = require("node:fs");
+const readline = require("node:readline");
+
 var argv = require("yargs/yargs")(process.argv.slice(2))
   .option('d',{
     alias: 'default',
@@ -13,6 +16,12 @@ var argv = require("yargs/yargs")(process.argv.slice(2))
     type: 'string',
     nargs: 1
   })
+  .option('r', {
+    alias: 'remove',
+    describe: 'remove a file',
+    type: 'string',
+    nargs: 1
+  })
   .option('l', {
     alias: 'list',
     describe: 'list all files',
@@ -20,7 +29,7 @@ var argv = require("yargs/yargs")(process.argv.slice(2))
   })
   .argv
 
-console.log(argv)
+console.log(argv);
 
 // Import settings
 settingsPath =`${__dirname}/../settings.json`;
@@ -33,16 +42,16 @@ if(argv.d != undefined) {
     try {
       settings.default = argv.d; 
     } catch {
-      console.log("invalid name")
+      console.log("invalid name");
     }
-    fs.writeFile(settingsPath, JSON.stringify(settings), err => {
+    fs.writeFile(settingsPath, JSON.stringify(settings), (err) => {
       if (err) {
       console.log("updating setting failed!");
       } else {
       console.log("settings updated successfully");
     }})}
   else {
-    console.log('File does not exist!')
+    console.log('File does not exist!');
   }
 };
 
@@ -59,6 +68,27 @@ if (argv.n != undefined) {
 if(argv.l != undefined) {
   fs.readdir(`${__dirname}/../appdata/`, (err, files) => {
     files.forEach(file => {
-      console.log(file)
+      console.log(file);
     })
 })};
+
+// Remove dir
+if(argv.r != undefined) {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
+  rl.question(`Are you sure you want to delete file "${argv.r}"? (Y/n)`, (answear) => {
+    if(answear === 'Y') {  
+      fs.rm(`${__dirname}/../appdata/${argv.r}`, {recursive: true}, (err) =>{
+        if(err){
+          console.log(err);
+        } else{
+          console.log(`file ${argv.r} removed successfully`);
+        }
+      })
+    } else {
+      console.log('not deleting anything')
+    }
+  rl.close();
+})}
