@@ -40,7 +40,7 @@ function objectToFile(path, object) {
 }
 
 // Get the settings object from the file
-settings = fileToObject(`${__dirname}/../settings.json`);
+let settings = fileToObject(`${__dirname}/../settings.json`);
 
 // if the f option is undefined, get the file
 // path from the settings

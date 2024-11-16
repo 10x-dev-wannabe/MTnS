@@ -1,7 +1,8 @@
 {
   "bin": {
     "MTsettings": "./bin/settings.js",
-    "MTadd" : "./bin/add.js"
+    "MTadd" : "./bin/add.js",
+    "MTview": "./bin/read.js"
   },
   "name": "MTnS",
   "version": "0.1.1",
