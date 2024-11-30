@@ -1,3 +1,6 @@
 appdata/*
 yarn.lock
 node_modules
+bin/read.js
+bin/settings.js
+bin/add.js

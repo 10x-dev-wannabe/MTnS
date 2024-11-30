@@ -1,8 +1,6 @@
 {
   "bin": {
-    "MTsettings": "./bin/settings.js",
-    "MTadd" : "./bin/add.js",
-    "MTview": "./bin/read.js"
+    "money": "./bin/main.js"
   },
   "name": "MTnS",
   "version": "0.1.1",
@@ -10,6 +8,6 @@
   "author": "dev10x <dev10xattempt@yahoo.com>",
   "license": "MIT",
   "dependencies": {
-    "yargs": "^17.7.2"
+    "@inquirer/prompts": "^7.1.0"
   }
 }
