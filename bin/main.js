@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
-import { select }   from '@inquirer/prompts';
-import { checkbox } from '@inquirer/prompts';
-import { number }   from '@inquirer/prompts';
+import { select, checkbox, number, input, confirm } from '@inquirer/prompts';
 
 import fs from 'fs';
 
@@ -21,6 +19,19 @@ function WriteFile(obj) {
   fs.writeFileSync(path, data);
 }
 
+function monthsArrayToMonthsString(arr){
+  let monthsNames = ["January, February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  let monthsStr = ''
+  if (arr.length ==12) {
+    monthsStr = "every month";
+  } else {
+    for (let i = 0; i < arr.length - 1; i ++) {
+       monthsStr = monthsStr + monthsNames[i] + ", ";
+  }}
+  
+  return monthsStr
+}
+
 const today = new Date();
 
 console.clear();
@@ -35,7 +46,7 @@ try {
 } catch {
   // If file is not yet generated,
   // make an array containing arrays
-  // representing 100 years,
+  // representing 
   // each year containg 12 arrys
   // representing months
   data = [];
@@ -51,29 +62,35 @@ let action = await select({
   message: "Select an action",
   choices: [
     {
-      name: "print",
-      value: "print",
+      name: "print", value: "print",
       description: "Print existing data"
     },
     {
-      name: "add",
-      value: "add",
+      name: "add", value: "add",
       description: "add a new object"
     }
   ]
 })
 
 let obj = {
+  name: undefined,
   type: undefined,
+  val: undefined,
   month: undefined,
   len: undefined,
   startY: undefined,
   startM: undefined,
   endY: undefined,
-  endM: undefined
+  endM: undefined,
 };
 
+
+// Get from user data for a new object
 if (action == "add"){
+  obj.name = await input({
+    message: "Insert the name of your object"
+  }) 
+
   obj.type = await select({
     message: "Is it variable",
     choices: [
@@ -87,6 +104,13 @@ if (action == "add"){
       }
     ]
   })
+  
+  if (obj.type === "fixed") {
+    obj.val = await number({
+      message: "input value of each payment"
+    })
+  }
+  
   obj.month = await select({
     message: "How often?",
     choices: [
@@ -104,6 +128,7 @@ if (action == "add"){
       }
     ]
   })
+  
   if (obj.month === "custom") {
     obj.month = await checkbox({
       message: "select months",
@@ -123,6 +148,7 @@ if (action == "add"){
       ]
     })
   } 
+  
   obj.len = await select({
     message: "For how long?",
     choices: [
@@ -132,7 +158,7 @@ if (action == "add"){
       },
       {
         name: "select months", value: "months",
-        description: "select for how many years"
+        description: "select for how many months"
       },
       {
         name: "select dates", value: "date",
@@ -140,6 +166,7 @@ if (action == "add"){
       }
     ]
   })
+  
   if (obj.len === "months") {
     obj.startY = today.getFullYear() - 2000;
     obj.startM = today.getMonth();
@@ -180,14 +207,16 @@ if (action == "add"){
       if (obj.endM > 11 || obj.endM < 0){
         console.log("month must be less than or equal to 12")
       }
-      if (obj.endM <= obj.startM && obj.endY === obj.startY) {
+      if (obj.endM < obj.startM && obj.endY === obj.startY) {
         console.log("length less than 0, retry")
         obj.endM = -1;
       }
-    } while (obj.endM > 11 || obj.endM < 0 )
-    
-  } else {
+    } while (obj.endM > 11 || obj.endM < 0 ) 
   }
+  
+  if( !(await confirm({
+    message: `Writing ${obj.type} object "${obj.name}", starting ${2000 + obj.startY}, ${obj.startM + 1}, ending ${2000 + obj.endY}, ${obj.endM + 1}, duration ${obj.len}, of value ${obj.val} on months: ${monthsArrayToMonthsString(obj.month)}\n
+              Is this right?`
+  }))) {process.exit()} 
 }
 
-console.log(obj)
