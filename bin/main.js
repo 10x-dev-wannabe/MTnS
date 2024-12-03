@@ -19,6 +19,7 @@ function WriteFile(obj) {
   fs.writeFileSync(path, data);
 }
 
+// Function that takes an array of months nr. and returns a string of months
 function monthsArrayToMonthsString(arr){
   let monthsNames = ["January, February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   let monthsStr = ''
@@ -58,6 +59,7 @@ try {
   } 
 }
 
+// first question
 let action = await select({
   message: "Select an action",
   choices: [
@@ -90,7 +92,7 @@ if (action == "add"){
   obj.name = await input({
     message: "Insert the name of your object"
   }) 
-
+  
   obj.type = await select({
     message: "Is it variable",
     choices: [
@@ -111,6 +113,8 @@ if (action == "add"){
     })
   }
   
+  // Get on which months of year
+  // will the money be added
   obj.month = await select({
     message: "How often?",
     choices: [
@@ -167,6 +171,8 @@ if (action == "add"){
     ]
   })
   
+  // If input by the number of months,
+  // set start as now, and calculate end
   if (obj.len === "months") {
     obj.startY = today.getFullYear() - 2000;
     obj.startM = today.getMonth();
@@ -180,6 +186,9 @@ if (action == "add"){
       obj.endM -= 12;
     }
   } else if (obj.len === "date") {
+    // If input by date ask for start
+    // and end dates
+    // Check if numbers are correct
     obj.startY = await number({
       message: "Start year in YY format"
     })
@@ -188,16 +197,16 @@ if (action == "add"){
         message: "Start month in MM format"
       }) - 1;
       if (obj.startM > 11 || obj.startM < 0){
-        console.log("month must be less than or equal to 12")
+        console.log("month must be less than or equal to 12");
       }
     } while (obj.startM > 11 || obj.startM < 0)
     
     do {
       obj.endY = await number({
-      message: "End year in YY format"
+      message: "End year in YY format";
       })
       if (obj.endY < obj.startY) {
-        console.log("end year must be greater or equal to start year")
+        console.log("end year must be greater or equal to start year");
       }
     } while (obj.endY < obj.startY)
     do {
@@ -205,10 +214,10 @@ if (action == "add"){
         message: "End month in MM format"
       }) - 1;
       if (obj.endM > 11 || obj.endM < 0){
-        console.log("month must be less than or equal to 12")
+        console.log("month must be less than or equal to 12");
       }
       if (obj.endM < obj.startM && obj.endY === obj.startY) {
-        console.log("length less than 0, retry")
+        console.log("length less than 0, retry");
         obj.endM = -1;
       }
     } while (obj.endM > 11 || obj.endM < 0 ) 
@@ -219,4 +228,5 @@ if (action == "add"){
               Is this right?`
   }))) {process.exit()} 
 }
+
 
