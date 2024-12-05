@@ -378,11 +378,19 @@ if (action == "set") {
       } while (month > 11 || month < 0)
     }
     let value = await number({message: "set value"}) 
-    
+    console.log(calendar[year][month])
+    if(calendar[year][month][0] == undefined){
+      console.log('f you')
+      calendar[year][month].push(
+        {
+          val: value,
+          id:  objects[objId].id
+        })
+    }
     calendar[year][month].forEach((obj, index) => {
       if (obj.id == objId) {
         obj.val = value;
-      } else if(index === calendar[year][month].length){
+      } else if (index == calendar[year][month].length){
           calendar[year][month].push(
           {
             val: value,
@@ -410,5 +418,6 @@ if (action === "status") {
   console.log("next Month");
   console.log(`${((month==11) ? year + 1: year)}  ${(month==11) ?  0 : month}`)
   console.log(nextMonth);
+
 
 }
