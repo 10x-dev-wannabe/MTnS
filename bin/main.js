@@ -292,7 +292,7 @@ if (action == "add"){
       if(obj.month.includes(j)){
         calendar[i][j].push({
           id: obj.id,
-          value: obj.val,
+          val: obj.val,
         });
       }
       j++;
@@ -302,7 +302,7 @@ if (action == "add"){
   if (obj.type === "variable") {
     calendar[obj.startY][obj.startM].push(
       {
-        value: `${await number({message: "set value"})}`,
+        val: `${await number({message: "set value"})}`,
         id: obj.id
       })
   }
@@ -385,7 +385,7 @@ if (action == "set") {
       } else if(index === calendar[year][month].length){
           calendar[year][month].push(
           {
-            value: value,
+            val: value,
             id:  objects[objId].id
           })
       }
@@ -411,8 +411,4 @@ if (action === "status") {
   console.log(`${((month==11) ? year + 1: year)}  ${(month==11) ?  0 : month}`)
   console.log(nextMonth);
 
-
 }
-
-
-
