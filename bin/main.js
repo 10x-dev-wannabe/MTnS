@@ -286,6 +286,9 @@ if (action == "add"){
   objects.push(obj);
   WriteFile(objects, "objects.json");
   
+  //TODO: fix the bug where the first payment
+  //      is this year's last month in the array
+  //      instead of the next yera's first
   let j = obj.month.at(-1);
   for(let i = obj.startY;i <= obj.endY ; i++) {
     while(j < 12 && (i-obj.startY)*12+j <= obj.len) {
@@ -377,28 +380,35 @@ if (action == "set") {
         }
       } while (month > 11 || month < 0)
     }
+
     let value = await number({message: "set value"}) 
-    console.log(calendar[year][month])
+    
+    // If the month is an empty array, add a new object
+    // to it. Else, loop over every object.
     if(calendar[year][month][0] == undefined){
-      console.log('f you')
       calendar[year][month].push(
         {
           val: value,
           id:  objects[objId].id
         })
-    }
-    calendar[year][month].forEach((obj, index) => {
-      if (obj.id == objId) {
-        obj.val = value;
-      } else if (index == calendar[year][month].length){
+    } else {
+      // Check if any of the object we want to set is
+      // among the objects in the month
+      calendar[year][month].forEach((obj, index) => {
+        // If we find the object, assign the new value
+        if (obj.id == objId) {
+          obj.val = value;
+          // if we checked all objects, push a new one
+        } else if (index == calendar[year][month].length){
           calendar[year][month].push(
-          {
-            val: value,
-            id:  objects[objId].id
-          })
-      }
+            {
+              val: value,
+              id:  objects[objId].id
+            })
+        }
+      })
     }
-    )}
+  }
 
   WriteFile(calendar, "calendar.json")
 }
