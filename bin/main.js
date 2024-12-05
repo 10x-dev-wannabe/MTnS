@@ -52,6 +52,8 @@ console.log("THIS APP IS WORK IN PROGRESS AND IT HAS NO FUNCTIONALLITY YET!");
 // Get data from save file
 let objects = ReadFile("objects.json");
 let calendar;
+
+// TODO: splt the calendar file into multiple files
 try {
   calendar = ReadFile("calendar.json");
 } catch {
@@ -305,7 +307,6 @@ if (action == "add"){
       })
   }
 
-  // TODO: split this file into multiple, smaller files
   WriteFile(calendar, "calendar.json");
 }
 
@@ -376,13 +377,42 @@ if (action == "set") {
         }
       } while (month > 11 || month < 0)
     }
-    calendar[year][month].push(
-      {
-        value: `${await number({message: "set value"})}`,
-        id:  objects[objId].id
-      })
-  }
+    let value = await number({message: "set value"}) 
+    
+    calendar[year][month].forEach((obj, index) => {
+      if (obj.id == objId) {
+        obj.val = value;
+      } else if(index === calendar[year][month].length){
+          calendar[year][month].push(
+          {
+            value: value,
+            id:  objects[objId].id
+          })
+      }
+    }
+    )}
 
   WriteFile(calendar, "calendar.json")
 }
+
+if (action === "status") {
+  let year  = today.getFullYear() - 2000;
+  let month = today.getMonth();
+  let thisMonth = calendar[year][month];
+  let nextMonth = calendar[(month==11) ? year + 1: year][(month==11) ?  0 : month];
+  let lastMonth = calendar[(month== 0) ? year - 1: year][(month== 0) ? 11 : month-1];
+  console.log("last Month");
+  console.log(`${(month== 0) ? year - 1: year} ${(month== 0) ? 11 : month -1}`)
+  console.log(lastMonth);
+  console.log("this Month");
+  console.log(`${year} ${month}`)
+  console.log(thisMonth);
+  console.log("next Month");
+  console.log(`${((month==11) ? year + 1: year)}  ${(month==11) ?  0 : month}`)
+  console.log(nextMonth);
+
+
+}
+
+
 
