@@ -8,6 +8,7 @@
 import { select, checkbox, number, input, confirm } from '@inquirer/prompts';
 
 import fs from 'fs';
+//import pkgJSON from './package.json' asert {type: 'json'};
 
 //var argv = require("yargs/yargs")(process.argv.slice(2))
 
@@ -40,14 +41,16 @@ function monthsArrayToMonthsString(arr){
   return monthsStr
 }
 */
-
+const version  = JSON.parse(
+  fs.readFileSync('package.json', 'utf8'),
+).version;
 const today = new Date();
 
 console.clear();
 console.log("Welcome to the WZ's money tracker");
 console.log("This is a simple app made to visualy represent buissness expenses and income, past and future");
 console.log("THIS APP IS WORK IN PROGRESS AND IT HAS NO FUNCTIONALLITY YET!");
-
+console.log(`version: ${version}`)
 
 // Get data from save file
 let objects = ReadFile("objects.json");
@@ -85,16 +88,22 @@ var action = await select({
       description: "add a new object"
     },
     {
-      name: "set", value: "set",
+      name: "set value", value: "set value",
       desription: "set the value of a variable object"
     }
 
   ]
 })
 
+/*
+ ___     _     _ 
+/   \ __| | __| |
+| - |/ _` |/ _` |
+|_|_|\__/_|\__/_|
+*/
 
 
-// TODO: move this function to a different file
+
 if (action == "add"){
   
   let obj = {
@@ -314,9 +323,14 @@ if (action == "add"){
 
   WriteFile(calendar, "calendar.json");
 }
+/*
+ ___       _   
+/ __| ___ | |_ 
+\__ \/ -_)|  _|
+|___/\___| \__|
+*/
 
-
-if (action == "set") {
+if (action == "set value") {
   let optsArray = [];
   objects.forEach( (value, index)=> {
     optsArray.push(
@@ -328,92 +342,80 @@ if (action == "set") {
   let objId = await select({
     message: "which object?",
     choices: optsArray
-  })
-  
-  optsArray = [];
-  if (objects[objId].val === undefined) {
-    optsArray.push(
-      {
-        name: "Set value", value: "val"
-      }
-    )
-  }
-  if (objects[objId].endY === undefined) {
-    optsArray.push(
-      {
-        name: "Set end date", value: "date"
-      }
-    )
-  }
-
-  let valToSet = await select({
-    message: "What do you want to set?",
-    choices: optsArray
-  })
-  
-  if (valToSet === "val") {
-    let year, month
-    if(await select({
-      message: "What date value to set?",
-      choices: [
-        {
-          name: "This month", value: true,
-          description: "Set value for this month"
-        },
-        {
-          name: "Chose date", value: false,
-          description: "Manualy set the date"
-        }
-      ]
-    }
-    )) {
-      year  = today.getFullYear() - 2000;
-      month = today.getMonth();
-    } else {
-      year = await number({
-        message: "Year in YY format"
-      })
-      do {
-        month = await number({
-          message: "Month in MM format"
-        }) - 1;
-        if (month > 11 || month < 0){
-          console.log("month must be less than or equal to 12");
-        }
-      } while (month > 11 || month < 0)
-    }
-
-    let value = await number({message: "set value"}) 
+  }) 
     
-    // If the month is an empty array, add a new object
-    // to it. Else, loop over every object.
-    if(calendar[year][month][0] == undefined){
-      calendar[year][month].push(
-        {
-          val: value,
-          id:  objects[objId].id
-        })
-    } else {
-      // Check if any of the object we want to set is
-      // among the objects in the month
-      calendar[year][month].forEach((obj, index) => {
-        // If we find the object, assign the new value
-        if (obj.id == objId) {
-          obj.val = value;
-          // if we checked all objects, push a new one
-        } else if (index == calendar[year][month].length){
-          calendar[year][month].push(
-            {
-              val: value,
-              id:  objects[objId].id
-            })
-        }
+  let year, month;
+  
+  // If user sets this month, set year and
+  // month to this month, else ask for them
+  if(await select({
+    message: "What date value to set?",
+    choices: [
+      {
+        name: "This month", value: true,
+        description: "Set value for this month"
+      },
+      {
+        name: "Chose date", value: false,
+        description: "Manualy set the date"
+    }]
+  })) {
+    year  = today.getFullYear() - 2000;
+    month = today.getMonth();
+  } else {
+    year = await number({
+      message: "Year in YY format"
       })
-    }
+    do {
+      month = await number({
+        message: "Month in MM format"
+      }) - 1;
+      if (month > 11 || month < 0){
+        console.log("month must be less than or equal to 12");
+      }
+    } while (month > 11 || month < 0)
   }
 
+  let value = await number({message: "set value"}) 
+    
+  // If the month is an empty array, add a new object
+  // to it. Else, loop over every object.
+  if(calendar[year][month][0] == undefined){
+    calendar[year][month].push(
+      {
+        val: value,
+        id:  objects[objId].id
+      })
+  } else {
+    // Check if any of the object we want to set is
+    // among the objects in the month
+    calendar[year][month].forEach((obj, index) => {
+      // If we find the object, assign the new value
+      if (obj.id == objId) {
+        obj.val = value;
+        // if we checked all objects, push a new one
+      } else if (index == calendar[year][month].length){
+        calendar[year][month].push(
+          {
+            val: value,
+            id:  objects[objId].id
+          })
+      }
+    })
+  }
   WriteFile(calendar, "calendar.json")
 }
+
+
+
+/*
+ ___  _          _             
+/ __|| |_  __ _ | |_  _  _  ___
+\__ \|  _|/ _` ||  _|| || |(_-/
+|___/ \__|\__/_| \__| \_._|/__/
+
+*/
+
 
 if (action === "status") {
   let year  = today.getFullYear() - 2000;
@@ -463,5 +465,7 @@ if (action === "status") {
 
   let table = {lastMonth: lastMonthObj, thisMonth: thisMonthObj, nextMonth: nextMonthObj}
   console.table(table)
-
 }
+
+
+//TODO: make the app generate a web page with charts
