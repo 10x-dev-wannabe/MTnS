@@ -3,7 +3,7 @@
     "money": "./bin/main.js"
   },
   "name": "MTnS",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "bin/main.js",
   "author": "dev10x <dev10xattempt@yahoo.com>",
   "license": "MIT",
