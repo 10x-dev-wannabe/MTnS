@@ -286,12 +286,13 @@ if (action == "add"){
   objects.push(obj);
   WriteFile(objects, "objects.json");
   
-  //TODO: fix the bug where the first payment
-  //      is this year's last month in the array
-  //      instead of the next yera's first
-  let j = obj.month.at(-1);
+  
+  // j is to iterate over months
+  // K is to keep track of length
+  let j = obj.startM;
+  let k = 0;
   for(let i = obj.startY;i <= obj.endY ; i++) {
-    while(j < 12 && (i-obj.startY)*12+j <= obj.len) {
+    while(j < 12 && k <= obj.len) {
       if(obj.month.includes(j)){
         calendar[i][j].push({
           id: obj.id,
@@ -299,8 +300,9 @@ if (action == "add"){
         });
       }
       j++;
+      k++;
     }
-    j = 0
+    j = 0;
   }
   if (obj.type === "variable") {
     calendar[obj.startY][obj.startM].push(
