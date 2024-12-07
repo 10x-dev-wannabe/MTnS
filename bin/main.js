@@ -408,6 +408,21 @@ if (action == "set value") {
     })
   }
   WriteFile(calendar, "calendar.json")
+
+    console.log(objects[objId].startM);
+  if (year < objects[objId].startY) {
+    console.log(objects[objId].startY)
+    objects[objId].startY = year;
+    objects[objId].startM = month;
+    console.log('one')
+    console.log(objects[objId].startY);
+    console.log(objects[objId].startM);
+  } else if(year == objects[objId].startY && month < objects[objId].startM){
+    console.log("you set month: " + month)
+    objects[objId].startM = month;
+    console.log(objects[objId].startM);
+  }
+  WriteFile(objects, "objects.json")
 }
 
 
@@ -473,9 +488,23 @@ if (action === "status") {
 
 
 //TODO: make the app generate a web page with charts
-/*
 
+/*
 if (action == "create data") {
-  console.log(process.cwd())
-}
-*/
+  let startY = 100;
+  let startM = 11;
+  objects.forEach((obj) => {
+    if (obj.startY < startY) {
+      startY = obj.startY;
+      startM = obj.startM;
+    } else if (obj.startY == startY && obj.startM < startM) {
+      startM = obj.startM;
+    } 
+  })
+
+
+
+
+  console.log([startY, startM]);
+  
+}*/
