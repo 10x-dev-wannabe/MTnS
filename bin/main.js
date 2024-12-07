@@ -409,18 +409,22 @@ if (action == "set value") {
   }
   WriteFile(calendar, "calendar.json")
 
-    console.log(objects[objId].startM);
   if (year < objects[objId].startY) {
-    console.log(objects[objId].startY)
+    console.log('also modifying start year and month');
     objects[objId].startY = year;
     objects[objId].startM = month;
-    console.log('one')
-    console.log(objects[objId].startY);
-    console.log(objects[objId].startM);
   } else if(year == objects[objId].startY && month < objects[objId].startM){
-    console.log("you set month: " + month)
+    console.log('also modifying start month');
     objects[objId].startM = month;
-    console.log(objects[objId].startM);
+  }
+  
+  if (year > objects[objId].endY) {
+    console.log('also modifying end year and month');
+    objects[objId].endY = year;
+    objects[objId].endM = month;
+  } else if(year == objects[objId].endY && month > objects[objId].endM){
+    console.log('also modifying end month');
+    objects[objId].endM = month;
   }
   WriteFile(objects, "objects.json")
 }
@@ -501,10 +505,6 @@ if (action == "create data") {
       startM = obj.startM;
     } 
   })
-
-
-
-
   console.log([startY, startM]);
-  
-}*/
+}
+*/
