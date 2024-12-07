@@ -42,7 +42,7 @@ function monthsArrayToMonthsString(arr){
 }
 */
 const version  = JSON.parse(
-  fs.readFileSync('package.json', 'utf8'),
+  fs.readFileSync(`${import.meta.dirname}/../package.json`, 'utf8'),
 ).version;
 const today = new Date();
 
@@ -82,6 +82,10 @@ var action = await select({
     {
       name: "status", value: "status",
       description: "print curent balance, bills, last current and next month's data"
+    },
+    {
+      name: "create data", value: "create data",
+      description: "create an html file in the current dir, where you can view your stats"
     },
     {
       name: "add", value: "add",
@@ -469,3 +473,9 @@ if (action === "status") {
 
 
 //TODO: make the app generate a web page with charts
+/*
+
+if (action == "create data") {
+  console.log(process.cwd())
+}
+*/
