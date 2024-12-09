@@ -493,18 +493,49 @@ if (action === "status") {
 
 //TODO: make the app generate a web page with charts
 
-/*
+
 if (action == "create data") {
+  
+  // Get start and end years for chart
   let startY = 100;
-  let startM = 11;
   objects.forEach((obj) => {
     if (obj.startY < startY) {
       startY = obj.startY;
-      startM = obj.startM;
-    } else if (obj.startY == startY && obj.startM < startM) {
-      startM = obj.startM;
-    } 
+  }})
+
+  let endY = 0;
+  objects.forEach((obj) => {
+    if (obj.endY > endY) {
+      endY = obj.endY;
+  }})
+  
+  // Make labels for chart
+  // In mm // yyyy format
+  let labels = [];
+  for(let i = startY; i <= endY; i++) {
+    for(let j = 0; j <= 12; j++) {
+      labels.push(`${j+1} // 20${i}`);
+    }
+  }
+
+  let datasets = [];
+  // For each object recorded in the file,
+  // make a dataset with it's name, and for
+  // every entry it has in the calendar file,
+  // add a data point to the data set, then
+  // add it to the array with all the datasets
+  objects.forEach((object) => {
+    let dataset = {name: object.name}
+    let data = [];
+    for(let i = object.startY; i <= object.endY; i++) {
+      for(let j = 0; j < 12; j++) {
+        calendar[i][j].forEach((obj) => {
+          if (obj.id == object.id) {
+            data.push({x: `${j+1} // 20${i}`, y: obj.val});
+    }})}}
+    dataset.data = data;
+    datasets.push(dataset);
   })
-  console.log([startY, startM]);
+
+  console.log(datasets);
 }
-*/
