@@ -525,17 +525,18 @@ if (action == "create data") {
   // add a data point to the data set, then
   // add it to the array with all the datasets
   objects.forEach((object) => {
-    let dataset = {name: object.name}
+    let dataset = {label: object.name}
     let data = [];
     for(let i = object.startY; i <= object.endY; i++) {
-      for(let j = 0; j < 12; j++) {
+      for(let j = 0; j < 11; j++) {
         calendar[i][j].forEach((obj) => {
           if (obj.id == object.id) {
             data.push({x: `${j+1} // 20${i}`, y: obj.val});
     }})}}
     dataset.data = data;
     datasets.push(dataset);
-  })
-
-  console.log(datasets);
+  });
+  
+  WriteFile(datasets, "data.json")
+  WriteFile(labels, "labels.json")
 }
