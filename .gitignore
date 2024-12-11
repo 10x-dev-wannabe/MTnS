@@ -1,6 +1,7 @@
-appdata/*
 yarn.lock
+package-lock.json
 node_modules
-bin/read.js
-bin/settings.js
-bin/add.js
+data/*
+charts/app/site.bundle.js
+charts/src/data.json
+charts/src/labels.json

@@ -7,4 +7,4 @@ npm install
 npm install -g . 
 ```
 
-currently this app has no real functionality, it only creates the data structure
+Now you can make an html file that displays the data in a chart. Run the "npm run build" command, and open the index.html file found inside the charts/app/ directory

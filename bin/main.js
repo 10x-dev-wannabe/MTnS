@@ -13,16 +13,16 @@ import fs from 'fs';
 //var argv = require("yargs/yargs")(process.argv.slice(2))
 
 
-function ReadFile(file) {
+function ReadFile(path) {
   let data;
-  data = fs.readFileSync(`${import.meta.dirname}/data/${file}`);
+  data = fs.readFileSync(`${import.meta.dirname}/../${path}`);
   data = JSON.parse(data);
   return data;
 }
-function WriteFile(obj, file) {
+function WriteFile(obj, path) {
   let data;
   data = JSON.stringify(obj);
-  fs.writeFileSync(`${import.meta.dirname}/data/${file}`, data);
+  fs.writeFileSync(`${import.meta.dirname}/../${path}`, data);
 }
 
 // Function that takes an array of months nr. and returns a string of months
@@ -49,16 +49,15 @@ const today = new Date();
 console.clear();
 console.log("Welcome to the WZ's money tracker");
 console.log("This is a simple app made to visualy represent buissness expenses and income, past and future");
-console.log("THIS APP IS WORK IN PROGRESS AND IT HAS NO FUNCTIONALLITY YET!");
 console.log(`version: ${version}`)
 
 // Get data from save file
-let objects = ReadFile("objects.json");
+let objects = ReadFile("data/objects.json");
 let calendar;
 
 // TODO: splt the calendar file into multiple files
 try {
-  calendar = ReadFile("calendar.json");
+  calendar = ReadFile("data/calendar.json");
 } catch {
   // If file is not yet generated,
   // make an array containing arrays
@@ -72,7 +71,7 @@ try {
       calendar[i].push([]);
     }
   } 
-  WriteFile(calendar, "calendar.json");
+  WriteFile(calendar, "data/calendar.json");
 }
 
 // first question
@@ -305,7 +304,7 @@ if (action == "add"){
   
   obj.id = objects.length;
   objects.push(obj);
-  WriteFile(objects, "objects.json");
+  WriteFile(objects, "data/objects.json");
   
   
   // j is to iterate over months
@@ -333,7 +332,7 @@ if (action == "add"){
       })
   }
 
-  WriteFile(calendar, "calendar.json");
+  WriteFile(calendar, "data/calendar.json");
 }
 /*
  ___       _   
@@ -415,7 +414,7 @@ if (action == "set value") {
       }
     })
   }
-  WriteFile(calendar, "calendar.json")
+  WriteFile(calendar, "data/calendar.json")
 
   if (year < objects[objId].startY) {
     console.log('also modifying start year and month');
@@ -434,7 +433,7 @@ if (action == "set value") {
     console.log('also modifying end month');
     objects[objId].endM = month;
   }
-  WriteFile(objects, "objects.json")
+  WriteFile(objects, "data/objects.json")
 }
 
 
@@ -553,18 +552,19 @@ if (action == "create data") {
 
   let total = {label: "total"}
   total.data = []
-  for(let i = 0; i < calendar.length; i++) {
+  for(let i = startY; i < endY; i++) {
     for(let j = 0; j < 11; j++){
       let val = 0;
       calendar[i][j].forEach((obj) => {
         val += obj.val;
       })
       if (val != 0){
-        total.data.push({x: `${j+1} // ${2000 + i}`, y: val})
+        total.data.push({x: `${j+1} // ${2000 + i}`, y: val});
     }}
   }
-  datasets.push(total)
 
-  WriteFile(datasets, "data.json")
-  WriteFile(labels, "labels.json")
+  datasets.push(total);
+
+  WriteFile(datasets, "charts/src/data.json");
+  WriteFile(labels, "charts/src/labels.json");
 }
