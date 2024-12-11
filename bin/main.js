@@ -8,7 +8,7 @@
 import { select, checkbox, number, input, confirm } from '@inquirer/prompts';
 
 import fs from 'fs';
-//import pkgJSON from './package.json' asert {type: 'json'};
+//import pkgJSON from './package.json' asert {var: 'json'};
 
 //var argv = require("yargs/yargs")(process.argv.slice(2))
 
@@ -112,7 +112,7 @@ if (action == "add"){
   
   let obj = {
     name: undefined,
-    type: undefined,
+    var: undefined,
     val: undefined,
     month: undefined,
     len: undefined,
@@ -126,7 +126,7 @@ if (action == "add"){
     message: "Insert the name of your object"
   }) 
   
-  obj.type = await select({
+  obj.var = await select({
     message: "Is it variable",
     choices: [
       {
@@ -140,11 +140,23 @@ if (action == "add"){
     ]
   })
   
-  if (obj.type === "fixed") {
+  if (obj.var === "fixed") {
     obj.val = await number({
       message: "input value of each payment"
     })
   }
+
+  obj.type = await select({
+    message: "Is it income or expense?",
+    choices: [
+      {
+        name: "income", value: "income"
+      },
+      {
+        name: "expense", value: "expense"
+      }
+    ]
+  })
   
   // Get on which months of year
   // will the money be added
@@ -154,10 +166,6 @@ if (action == "add"){
       {
         name: "monthly", value: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
         description: "once every month"
-      },
-      {
-        name: "yearly", value: [0],
-        description: "once every year"
       },
       {
         name: "custom", value: "custom",
@@ -289,7 +297,7 @@ if (action == "add"){
   }
 
   if( !(await confirm({
-    message: `Writing ${obj.type} object "${obj.name}", starting ${2000 + obj.startY}, ${obj.startM + 1}, ending ${2000 + obj.endY}, ${obj.endM + 1}, duration ${obj.len}, of value ${obj.val} on months: ${obj.month.join()}\n
+    message: `Writing ${obj.var} object "${obj.name}", starting ${2000 + obj.startY}, ${obj.startM + 1}, ending ${2000 + obj.endY}, ${obj.endM + 1}, duration ${obj.len}, of value ${obj.val} on months: ${obj.month.join()}\n
               Is this right?`
   }))) {process.exit()} 
 
@@ -317,7 +325,7 @@ if (action == "add"){
     }
     j = 0;
   }
-  if (obj.type === "variable") {
+  if (obj.var === "variable") {
     calendar[obj.startY][obj.startM].push(
       {
         val: `${await number({message: "set value"})}`,
@@ -525,18 +533,38 @@ if (action == "create data") {
   // add a data point to the data set, then
   // add it to the array with all the datasets
   objects.forEach((object) => {
-    let dataset = {label: object.name}
+    let dataset = {label: object.name};
     let data = [];
+    if (object.type == "expense") {
+      dataset.type = "bar";
+    }
+    
+    // Iterate over every month and push the object value
+    // to it's dataset
     for(let i = object.startY; i <= object.endY; i++) {
       for(let j = 0; j < 11; j++) {
         calendar[i][j].forEach((obj) => {
           if (obj.id == object.id) {
-            data.push({x: `${j+1} // 20${i}`, y: obj.val});
-    }})}}
+            data.push({x: `${j+1} // ${2000 + i}`, y: obj.val});
+    }})}};
     dataset.data = data;
     datasets.push(dataset);
   });
-  
+
+  let total = {label: "total"}
+  total.data = []
+  for(let i = 0; i < calendar.length; i++) {
+    for(let j = 0; j < 11; j++){
+      let val = 0;
+      calendar[i][j].forEach((obj) => {
+        val += obj.val;
+      })
+      if (val != 0){
+        total.data.push({x: `${j+1} // ${2000 + i}`, y: val})
+    }}
+  }
+  datasets.push(total)
+
   WriteFile(datasets, "data.json")
   WriteFile(labels, "labels.json")
 }
