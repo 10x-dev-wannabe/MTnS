@@ -8,11 +8,9 @@
 import { select, checkbox, number, input, confirm } from '@inquirer/prompts';
 
 import fs from 'fs';
-//import pkgJSON from './package.json' asert {var: 'json'};
-
-//var argv = require("yargs/yargs")(process.argv.slice(2))
 
 
+// Functions to read and write files
 function ReadFile(path) {
   let data;
   data = fs.readFileSync(`${import.meta.dirname}/../${path}`);
@@ -498,9 +496,6 @@ if (action === "status") {
 }
 
 
-//TODO: make the app generate a web page with charts
-
-
 if (action == "create data") {
   
   // Get start and end years for chart
@@ -520,7 +515,7 @@ if (action == "create data") {
   // In mm // yyyy format
   let labels = [];
   for(let i = startY; i <= endY; i++) {
-    for(let j = 0; j <= 12; j++) {
+    for(let j = 0; j < 12; j++) {
       labels.push(`${j+1} // 20${i}`);
     }
   }
@@ -534,9 +529,9 @@ if (action == "create data") {
   objects.forEach((object) => {
     let dataset = {label: object.name};
     let data = [];
-    if (object.type == "expense") {
-      dataset.type = "bar";
-    }
+    //if (object.type == "expense") {
+    //  dataset.type = "bar";
+    //}
     
     // Iterate over every month and push the object value
     // to it's dataset

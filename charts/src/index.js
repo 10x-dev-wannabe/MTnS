@@ -1,5 +1,3 @@
-//import * as datasets from './data.json';
-//import * as labels from './labels.json';
 const lbl = require('./labels.json');
 const datasets = require('./data.json');
 
