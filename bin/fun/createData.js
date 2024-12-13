@@ -1,4 +1,4 @@
-import { calendar, objects, WriteFile, today} from "./functions.js";
+import { calendar, objects, WriteFile} from "../functions.js";
 
 export function createData() {
   

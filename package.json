@@ -6,7 +6,7 @@
     "money": "./bin/main.js"
   },
   "name": "MTnS",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "main": "bin/main.js",
   "author": "dev10x <dev10xattempt@yahoo.com>",
   "license": "MIT",

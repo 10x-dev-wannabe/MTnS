@@ -1,4 +1,4 @@
-import { calendar, today} from "./functions.js";
+import { calendar, today} from "../functions.js";
 
 
 export function status() {

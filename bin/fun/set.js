@@ -1,5 +1,5 @@
 import { select, checkbox, number, input, confirm } from '@inquirer/prompts';
-import { calendar, objects, WriteFile, today} from "./functions.js";
+import { calendar, objects, WriteFile, today} from "../functions.js";
 
 export async function set() {
   let optsArray = [];
