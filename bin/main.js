@@ -1,10 +1,5 @@
 #!/usr/bin/env node
 
-// I know this file is an absolute monolyth but stick with me for a second
-// I'm trying to make a working beta as soon as possible, and async functions
-// are kinda wacky to deal with for me, so I'll split it up in multiple files
-// when I've added all the features.
-
 import { select } from '@inquirer/prompts';
 
 import fs from 'fs';
