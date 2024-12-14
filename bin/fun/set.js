@@ -65,11 +65,11 @@ export async function set() {
       if (obj.id == objId) {
         obj.val = value;
         // if we checked all objects, push a new one
-      } else if (index == calendar[year][month].length){
+      } else if (index+1 == calendar[year][month].length){
         calendar[year][month].push(
           {
             val: value,
-            id:  objects[objId].id
+            id:  objId
           })
       }
     })
