@@ -174,6 +174,8 @@ export async function add() {
     )) {
       obj.startY = today.getFullYear() - 2000;
       obj.startM = today.getMonth();
+      obj.endY = obj.startY;
+      obj.endM = obj.startM;
     } else {
       obj.startY = await number({
         message: "Start year in YY format"
@@ -186,6 +188,8 @@ export async function add() {
           console.log("month must be less than or equal to 12");
         }
       } while (obj.startM > 11 || obj.startM < 0)
+      obj.endY = obj.startY;
+      obj.endM = obj.startM;
     }
   }
 
