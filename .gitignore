@@ -5,3 +5,4 @@ data/*
 charts/app/site.bundle.js
 charts/src/data.json
 charts/src/labels.json
+charts/src/years.json

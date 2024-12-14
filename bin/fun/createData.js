@@ -24,7 +24,10 @@ export function createData() {
     }
   }
 
+
   let datasets = [];
+  let datasetsByYears = [];
+
   // For each object recorded in the file,
   // make a dataset with it's name, and for
   // every entry it has in the calendar file,
@@ -32,27 +35,37 @@ export function createData() {
   // add it to the array with all the datasets
   objects.forEach((object) => {
     let dataset = {label: object.name};
-    let data = [];
-    //if (object.type == "expense") {
-    //  dataset.type = "bar";
-    //}
+    let allData = [];
     
     // Iterate over every month and push the object value
     // to it's dataset
     for(let i = object.startY; i <= object.endY; i++) {
-      for(let j = 0; j < 11; j++) {
+      let year = [];
+      for(let j = 0; j <= 11; j++) {
         calendar[i][j].forEach((obj) => {
           if (obj.id == object.id) {
-            data.push({x: `${j+1} // ${2000 + i}`, y: obj.val});
-    }})}};
-    dataset.data = data;
+            allData.push({x: `${j+1} // ${2000 + i}`, y: obj.val});
+            year.push({x: `${j+1} // ${2000 + i}`, y: obj.val});
+          }
+        })
+      }
+      try {
+        datasetsByYears[i].push({label: object.name, data: year});
+      } catch {
+        datasetsByYears[i] = [];
+        datasetsByYears[i].push({label: object.name, data: year});
+      }
+
+    };
+    dataset.data = allData;
     datasets.push(dataset);
   });
+  datasetsByYears = datasetsByYears.filter((val) => {return val != null})
 
   let total = {label: "total"}
   total.data = []
   for(let i = startY; i < endY; i++) {
-    for(let j = 0; j < 11; j++){
+    for(let j = 0; j <= 11; j++){
       let val = 0;
       calendar[i][j].forEach((obj) => {
         val += obj.val;
@@ -61,9 +74,9 @@ export function createData() {
         total.data.push({x: `${j+1} // ${2000 + i}`, y: val});
     }}
   }
-
   datasets.push(total);
 
+  WriteFile(datasetsByYears, "charts/src/years.json");
   WriteFile(datasets, "charts/src/data.json");
   WriteFile(labels, "charts/src/labels.json");
 }
