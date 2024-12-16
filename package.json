@@ -1,13 +1,13 @@
 {
   "scripts": {
-    "build": "webpack --mode development"
+    "build": "webpack"
   },
   "bin": {
     "money": "./bin/main.js"
   },
   "type": "module",
   "name": "MTnS",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "main": "bin/main.js",
   "author": "dev10x <dev10xattempt@yahoo.com>",
   "license": "MIT",

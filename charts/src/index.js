@@ -1,6 +1,6 @@
-const lbl = require('./labels.json');
-const datasets = require('./data.json');
-const years = require('./years.json');
+import lbl from './labels.json';
+import datasets from './data.json';
+import years from './years.json';
 
 
 const ctx = document.getElementById('myChart');
@@ -23,12 +23,11 @@ new Chart(ctx, {
 
 });
 
-yearChartDiv = document.getElementById("chartsByYear");
+let yearChartDiv = document.getElementById("chartsByYear");
 years.forEach((val, index) => {
   if (val != null) {
-    let yearLbl = lbl.slice(index*12, index*12+12)
-    console.log(yearLbl)
-    newCanvas = document.createElement("canvas");
+    let yearLbl = lbl.slice(index*12, index*12+12);
+    let newCanvas = document.createElement("canvas");
     newCanvas.id = index;
     yearChartDiv.appendChild(newCanvas);
     new Chart(newCanvas, {
