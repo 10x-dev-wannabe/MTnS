@@ -5,6 +5,7 @@
   "bin": {
     "money": "./bin/main.js"
   },
+  "type": "module",
   "name": "MTnS",
   "version": "0.5.0",
   "main": "bin/main.js",
