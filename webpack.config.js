@@ -1,10 +1,11 @@
-const path = require('path');
+import path from 'path';
 
-module.exports = {
+let config = {
   mode: 'development',
   entry: './charts/src/index.js',
   output: {
-    path: path.resolve(__dirname, 'charts/app/'),
+    path: path.resolve(import.meta.dirname, 'charts/app/'),
     filename: 'site.bundle.js'
   }
 }
+export default config

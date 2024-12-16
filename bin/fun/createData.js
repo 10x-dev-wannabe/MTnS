@@ -1,5 +1,5 @@
 import { calendar, objects, WriteFile} from "../functions.js";
-
+import { execSync } from "child_process";
 export function createData() {
   
   // Get start and end years for chart
@@ -79,4 +79,14 @@ export function createData() {
   WriteFile(datasetsByYears, "charts/src/years.json");
   WriteFile(datasets, "charts/src/data.json");
   WriteFile(labels, "charts/src/labels.json");
+  console.log("Making chart data with webpack...");
+  
+  try {
+    execSync("npm run build");
+    console.log("\x1b[36m", "Please ignore the error above");
+    console.log("\x1b[32m", "Chart generated successfully");
+  } catch {
+    console.log("\x1b[31m", "failed to generate charts");
+    console.log("\x1b[31m", "please start an issue on GitHub if you can't find the problem");
+  }
 }
