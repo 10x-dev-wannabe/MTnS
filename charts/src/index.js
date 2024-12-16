@@ -3,6 +3,11 @@ import datasets from './data.json';
 import years from './years.json';
 
 
+Chart.defaults.datasets.line.borderWidth = 5;
+Chart.defaults.font.size = 20;
+Chart.defaults.font.weight = 700;
+Chart.defaults.color = '#fff';
+
 const ctx = document.getElementById('myChart');
 new Chart(ctx, {
   type: 'line',
@@ -11,16 +16,36 @@ new Chart(ctx, {
     datasets: datasets
   },
   options: {
-  scales: {
-    x: {
-      ticks: {
-        display: true,
-        autoSkip: false
+    scales: {
+      x: {
+        ticks: {
+          display: true,
+          autoSkip: false
+        },
+        grid: {
+          color: "#ffffffA0",
+          lineWidth: 2
+        }
+      },
+      y: {
+        grid: {
+          color: "#ffffffA0",
+          lineWidth: 2
+        }
       }
-    }
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "All time record",
+        align: "start",
+        font: {
+          size: 50
+        }
+      }
+    },
+    maintainAspectRatio: false
   }
-}
-
 });
 
 let yearChartDiv = document.getElementById("chartsByYear");
@@ -28,23 +53,53 @@ years.forEach((val, index) => {
   if (val != null) {
     let yearLbl = lbl.slice(index*12, index*12+12);
     let newCanvas = document.createElement("canvas");
+    let newDiv = document.createElement("div");
     newCanvas.id = index;
-    yearChartDiv.appendChild(newCanvas);
+    newCanvas.className = 'yearChart';
+    newDiv.appendChild(newCanvas);
+    yearChartDiv.appendChild(newDiv);
     new Chart(newCanvas, {
       type: 'line',
       data: {
         labels: yearLbl,
         datasets: val
       },
-      scales: {
-        x: {
-          ticks: {
-            display: true,
-            autoSkip: false
+      options: {
+        scales: {
+          x: {
+            ticks: {
+              display: true,
+              autoSkip: false
+            },
+            grid: {
+              color: "#ffffffE0",
+              lineWidth: 2.5
+            }
+          },
+          y: {
+            grid: {
+              color: "#ffffffE0",
+              lineWidth: 2.5
+            }
           }
-        }
-    }})
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: yearLbl[0].substring(5),
+            align: "start",
+            font: {
+              size: 35
+            }
+          }
+        },
+        layout: {
+          padding: {
+            top: 200
+          }
+        },
+        maintainAspectRatio: false
+      }
+    });
   }
 })
-Chart.defaults.borderColor = '#ffffff'
-Chart.defaults.backgroundColor = '#ffffff'
