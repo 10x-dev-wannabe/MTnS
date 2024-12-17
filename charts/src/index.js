@@ -44,7 +44,8 @@ new Chart(ctx, {
         }
       }
     },
-    maintainAspectRatio: false
+    maintainAspectRatio: false,
+    responsive: true,
   }
 });
 
@@ -54,6 +55,7 @@ years.forEach((val, index) => {
     let yearLbl = lbl.slice(index*12, index*12+12);
     let newCanvas = document.createElement("canvas");
     let newDiv = document.createElement("div");
+    newDiv.className = 'yearDiv';
     newCanvas.id = index;
     newCanvas.className = 'yearChart';
     newDiv.appendChild(newCanvas);
@@ -98,7 +100,8 @@ years.forEach((val, index) => {
             top: 200
           }
         },
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        responsive: true,
       }
     });
   }
