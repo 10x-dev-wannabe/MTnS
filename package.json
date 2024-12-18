@@ -7,7 +7,7 @@
   },
   "type": "module",
   "name": "MTnS",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "main": "bin/main.js",
   "author": "dev10x <dev10xattempt@yahoo.com>",
   "license": "MIT",

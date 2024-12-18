@@ -78,9 +78,6 @@ export function createData() {
   datasetsByYears.forEach((value, index) => {
     let yStart = total.data.findIndex((val)     => { return val.x.slice(-4) == `${2000 + index}` } )
     let yEnd   = total.data.findLastIndex((val) => { return val.x.slice(-4) == `${2000 + index}` } )
-    console.log(index, yStart, yEnd);
-    console.log(total.data[yStart]);
-    console.log(total.data[yEnd]);
     let data = total.data.slice(yStart, yEnd+1);
     datasetsByYears[index].push({label: "total", data: data});
   })
