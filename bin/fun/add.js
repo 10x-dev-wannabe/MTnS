@@ -1,4 +1,4 @@
-import { select, checkbox, number, input, confirm } from '@inquirer/prompts';
+import { select, checkbox, number, input, confirm } from 'npm:@inquirer/prompts';
 import { calendar, objects, WriteFile, today} from "../functions.js";
 
 export async function add() {

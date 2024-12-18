@@ -1,6 +1,5 @@
 {
   "scripts": {
-    "build": "webpack"
   },
   "bin": {
     "money": "./bin/main.js"
@@ -13,9 +12,5 @@
   "license": "MIT",
   "dependencies": {
     "@inquirer/prompts": "^7.1.0"
-  },
-  "devDependencies": {
-    "webpack": "^5.97.1",
-    "webpack-cli": "^5.1.4"
   }
 }

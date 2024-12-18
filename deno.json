@@ -1,0 +1,12 @@
+{
+  "name": "MTnS",
+  "version": "1.0.0-alpha",
+  "tasks": {
+    "dev": "deno run --watch bin/main.js",
+    "start": "deno run --allow-read --allow-write --allow-env bin/main.js"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1"
+  },
+  "nodeModuledDir": "auto"
+}
