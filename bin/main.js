@@ -59,3 +59,4 @@ switch (action) {
     createData();
 }
 
+Deno.exit(0);

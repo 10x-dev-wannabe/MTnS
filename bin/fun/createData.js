@@ -1,4 +1,5 @@
 import { calendar, objects, WriteFile} from "../functions.js";
+import * as esbuild from "https://deno.land/x/esbuild@v0.24.1/mod.js";
 import { execSync } from "node:child_process";
 export function createData() {
   
@@ -18,8 +19,7 @@ export function createData() {
   // Make labels for chart
   // In mm // yyyy format
   let labels = [];
-  for(let i = startY; i <= endY; i++) {
-    for(let j = 0; j < 12; j++) {
+  for(let i = startY; i <= endY; i++) { for(let j = 0; j < 12; j++) {
       labels.push(`${j+1} // 20${i}`);
     }
   }
@@ -87,11 +87,14 @@ export function createData() {
   WriteFile(datasetsByYears, "charts/src/years.json");
   WriteFile(datasets, "charts/src/data.json");
   WriteFile(labels, "charts/src/labels.json");
-  console.log("Making chart data with webpack...");
-  
+
+  console.log("Making chart data with esbuild...");
   try {
-    execSync("npm run build");
-    console.log("\x1b[36m", "Please ignore the error above");
+    esbuild.build({
+      entryPoints: ["charts/src/index.js"],
+      outfile: "charts/app/site.bundle.js",
+      bundle: true
+    })
     console.log("\x1b[32m", "Chart generated successfully");
   } catch {
     console.log("\x1b[31m", "failed to generate charts");
