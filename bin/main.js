@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { select } from 'npm:@inquirer/prompts';
 
 import { add } from './fun/add.js';
@@ -7,11 +5,6 @@ import { set } from './fun/set.js';
 import { status } from './fun/status.js';
 import { createData } from './fun/createData.js';
 
-/*
-const version  = JSON.parse(
-  fs.readFileSync(`${import.meta.dirname}/../package.json`, 'utf8'),
-).version;
-*/
 
 console.clear();
 console.log("Welcome to the WZ's money tracker");

@@ -1,5 +1,3 @@
-import fs from 'node:fs';
-
 function ReadFile(path) {
   let data;
   data = Deno.readTextFileSync(`${import.meta.dirname}/../${path}`);
