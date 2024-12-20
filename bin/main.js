@@ -56,7 +56,7 @@ switch (action) {
     status();
     break;
   case "create data":
-    createData();
+    await createData();
 }
 
 Deno.exit(0);

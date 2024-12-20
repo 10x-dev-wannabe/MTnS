@@ -2,7 +2,7 @@ yarn.lock
 package-lock.json
 node_modules
 data/*
-charts/app/site.bundle.js
-charts/src/data.json
-charts/src/labels.json
-charts/src/years.json
+chartData/data.json
+chartData/labels.json
+chartData/years.json
+site.bundle.js

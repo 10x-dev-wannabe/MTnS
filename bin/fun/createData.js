@@ -1,7 +1,7 @@
 import { calendar, objects, WriteFile} from "../functions.js";
 import * as esbuild from "https://deno.land/x/esbuild@v0.24.1/mod.js";
-import { execSync } from "node:child_process";
-export function createData() {
+
+export async function createData() {
   
   // Get start and end years for chart
   let startY = 100;
@@ -84,15 +84,15 @@ export function createData() {
 
   datasetsByYears = datasetsByYears.filter((val) => {return val != null});
 
-  WriteFile(datasetsByYears, "charts/src/years.json");
-  WriteFile(datasets, "charts/src/data.json");
-  WriteFile(labels, "charts/src/labels.json");
+  WriteFile(datasetsByYears, "chartData/years.json");
+  WriteFile(datasets, "chartData/data.json");
+  WriteFile(labels, "chartData/labels.json");
 
   console.log("Making chart data with esbuild...");
   try {
-    esbuild.build({
-      entryPoints: ["charts/src/index.js"],
-      outfile: "charts/app/site.bundle.js",
+    await esbuild.build({
+      entryPoints: ["chartData/index.js"],
+      outfile: "site.bundle.js",
       bundle: true
     })
     console.log("\x1b[32m", "Chart generated successfully");
