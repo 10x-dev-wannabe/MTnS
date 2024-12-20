@@ -1,13 +1,4 @@
 {
-  "bin": {
-    "money": "./bin/main.js"
-  },
-  "type": "module",
-  "name": "MTnS",
-  "version": "0.9.1",
-  "main": "bin/main.js",
-  "author": "dev10x <dev10xattempt@yahoo.com>",
-  "license": "MIT",
   "dependencies": {
     "@inquirer/prompts": "^7.1.0"
   }

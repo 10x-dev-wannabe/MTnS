@@ -46,10 +46,10 @@ var action = await select({
 
 switch (action) {
   case "add":
-    add();
+    await add();
     break;
   case "set value":
-    set();
+    await set();
     break;
   case "status":
     status();
