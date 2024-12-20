@@ -1,6 +1,4 @@
 {
-  "scripts": {
-  },
   "bin": {
     "money": "./bin/main.js"
   },

@@ -2,7 +2,7 @@ import fs from 'node:fs';
 
 function ReadFile(path) {
   let data;
-  data = fs.readFileSync(`${import.meta.dirname}/../${path}`);
+  data = Deno.readTextFileSync(`${import.meta.dirname}/../${path}`);
   data = JSON.parse(data);
   return data;
 }
@@ -10,7 +10,7 @@ function ReadFile(path) {
 function WriteFile(obj, path) {
   let data;
   data = JSON.stringify(obj);
-  fs.writeFileSync(`${import.meta.dirname}/../${path}`, data);
+  Deno.writeTextFileSync(`${import.meta.dirname}/../${path}`, data);
 }
 
 let calendar;

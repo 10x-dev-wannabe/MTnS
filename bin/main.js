@@ -2,7 +2,6 @@
 
 import { select } from 'npm:@inquirer/prompts';
 
-import fs from 'node:fs';
 import { add } from './fun/add.js';
 import { set } from './fun/set.js';
 import { status } from './fun/status.js';
