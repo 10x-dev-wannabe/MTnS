@@ -6,7 +6,7 @@ export async function set() {
   objects.forEach( (value, index)=> {
     optsArray.push(
       {
-        name: `${value.name}`, value: `${index}`
+        name: `${value.name}`, value: index
       }
     )
   })
@@ -51,29 +51,31 @@ export async function set() {
     
   // If the month is an empty array, add a new object
   // to it. Else, loop over every object.
-  if(calendar[year][month][0] == undefined){
+  if(calendar[year][month][0] === undefined){
     calendar[year][month].push(
       {
         val: value,
-        id:  objects[objId].id
+        id:  objId
       })
   } else {
     // Check if any of the object we want to set is
     // among the objects in the month
-    calendar[year][month].forEach((obj, index) => {
+    for (let i = 0; i < calendar[year][month].length; i++) {
       // If we find the object, assign the new value
-      if (obj.id == objId) {
-        obj.val = value;
-        // if we checked all objects, push a new one
-      } else if (index+1 == calendar[year][month].length){
+      if (calendar[year][month][i].id === objId) {
+        calendar[year][month][i].val = value;
+        break;
+      // if we checked all objects, push a new one
+      } else if (i+1 == calendar[year][month].length){
         calendar[year][month].push(
           {
             val: value,
             id:  objId
           })
       }
-    })
+    }
   }
+
   WriteFile(calendar, "data/calendar.json")
 
   if (year < objects[objId].startY) {
