@@ -2,7 +2,7 @@ import { select, checkbox, number, input, confirm } from 'npm:@inquirer/prompts'
 import { calendar, objects, WriteFile, today} from "../functions.js";
 
 export async function add() {
-  let obj = {
+  const obj = {
     name: undefined,
     var: undefined,
     val: undefined,
@@ -196,7 +196,7 @@ export async function add() {
   if(!(await confirm({
     message: `Writing ${obj.var} object "${obj.name}", starting ${2000 + obj.startY}, ${obj.startM + 1}, ending ${2000 + obj.endY}, ${obj.endM + 1}, duration ${obj.len}, of value ${obj.val} on months: ${obj.month.join()}\n
               Is this right?`
-  }))) {process.exit()} 
+  }))) {Deno.exit()} 
 
   console.log('Writing to file...');
   

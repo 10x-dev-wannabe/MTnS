@@ -2,7 +2,7 @@ import { select, number } from 'npm:@inquirer/prompts';
 import { calendar, objects, WriteFile, today} from "../functions.js";
 
 export async function set() {
-  let optsArray = [];
+  const optsArray = [];
   objects.forEach( (value, index)=> {
     optsArray.push(
       {
@@ -10,7 +10,7 @@ export async function set() {
       }
     )
   })
-  let objId = await select({
+  const objId = await select({
     message: "which object?",
     choices: optsArray
   }) 
@@ -47,7 +47,7 @@ export async function set() {
     } while (month > 11 || month < 0)
   }
 
-  let value = await number({message: "set value"}) 
+  const value = await number({message: "set value"}) 
     
   // If the month is an empty array, add a new object
   // to it. Else, loop over every object.

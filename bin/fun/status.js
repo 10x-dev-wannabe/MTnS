@@ -2,19 +2,19 @@ import { calendar, today} from "../functions.js";
 
 
 export function status() {
-  let year  = today.getFullYear() - 2000;
-  let month = today.getMonth();
+  const year  = today.getFullYear() - 2000;
+  const month = today.getMonth();
   
-  let lastMonth = calendar[(month== 0) ? year - 1: year][(month== 0) ? 11 : month-1];
-  let thisMonth = calendar[year][month];
-  let nextMonth = calendar[(month==11) ? year + 1: year][(month==11) ?  0 : month];
+  const lastMonth = calendar[(month== 0) ? year - 1: year][(month== 0) ? 11 : month-1];
+  const thisMonth = calendar[year][month];
+  const nextMonth = calendar[(month==11) ? year + 1: year][(month==11) ?  0 : month];
  
   // array for each month
   // represents net, income, expenses
   // year, month
-  let lastMonthArr = [0, 0, 0, 0, 0];
-  let thisMonthArr = [0, 0, 0, 0, 0];
-  let nextMonthArr = [0, 0, 0, 0, 0];
+  const lastMonthArr = [0, 0, 0, 0, 0];
+  const thisMonthArr = [0, 0, 0, 0, 0];
+  const nextMonthArr = [0, 0, 0, 0, 0];
 
   lastMonth.forEach((obj) => {lastMonthArr[0] += obj.val});
   thisMonth.forEach((obj) => {thisMonthArr[0] += obj.val});
@@ -47,6 +47,6 @@ export function status() {
   const thisMonthObj = new Month(thisMonthArr);
   const nextMonthObj = new Month(nextMonthArr);
 
-  let table = {lastMonth: lastMonthObj, thisMonth: thisMonthObj, nextMonth: nextMonthObj}
+  const table = {lastMonth: lastMonthObj, thisMonth: thisMonthObj, nextMonth: nextMonthObj}
   console.table(table)
 }

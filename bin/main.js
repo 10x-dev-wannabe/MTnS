@@ -13,7 +13,7 @@ console.log("This is a simple app made to visualy represent buissness expenses a
 
 
 // first question
-var action = await select({
+const action = await select({
   message: "Select an action",
   choices: [
     {

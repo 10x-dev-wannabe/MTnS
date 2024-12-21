@@ -18,14 +18,14 @@ export async function createData() {
   
   // Make labels for chart
   // In mm // yyyy format
-  let labels = [];
+  const labels = [];
   for(let i = startY; i <= endY; i++) { for(let j = 0; j < 12; j++) {
       labels.push(`${j+1} // 20${i}`);
     }
   }
 
 
-  let datasets = [];
+  const datasets = [];
   let datasetsByYears = [];
 
   // For each object recorded in the file,
@@ -34,13 +34,13 @@ export async function createData() {
   // add a data point to the data set, then
   // add it to the array with all the datasets
   objects.forEach((object) => {
-    let dataset = {label: object.name};
-    let allData = [];
+    const dataset = {label: object.name};
+    const allData = [];
     
     // Iterate over every month and push the object value
     // to it's dataset
     for(let i = object.startY; i <= object.endY; i++) {
-      let year = [];
+      const year = [];
       for(let j = 0; j <= 11; j++) {
         calendar[i][j].forEach((obj) => {
           if (obj.id == object.id) {
@@ -60,7 +60,8 @@ export async function createData() {
     dataset.data = allData;
     datasets.push(dataset);
   });
-  let total = {label: "total"};
+
+  const total = {label: "total"};
   total.data = [];
   for(let i = startY; i < endY; i++) {
     for(let j = 0; j <= 11; j++){
@@ -75,10 +76,10 @@ export async function createData() {
   datasets.push(total);
   
 
-  datasetsByYears.forEach((value, index) => {
-    let yStart = total.data.findIndex((val)     => { return val.x.slice(-4) == `${2000 + index}` } )
-    let yEnd   = total.data.findLastIndex((val) => { return val.x.slice(-4) == `${2000 + index}` } )
-    let data = total.data.slice(yStart, yEnd+1);
+  datasetsByYears.forEach((_value, index) => {
+    const yStart = total.data.findIndex((val)     => { return val.x.slice(-4) == `${2000 + index}` } )
+    const yEnd   = total.data.findLastIndex((val) => { return val.x.slice(-4) == `${2000 + index}` } )
+    const data = total.data.slice(yStart, yEnd+1);
     datasetsByYears[index].push({label: "total", data: data});
   })
 

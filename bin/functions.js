@@ -21,7 +21,7 @@ try {
   // each year containg 12 arrys
   // representing months
   calendar = [];
-  for(var i = 0; i < 100; i++){
+  for(let i = 0; i < 100; i++){
     calendar.push([]);
     for(let x = 0; x < 12; x++){
       calendar[i].push([]);
