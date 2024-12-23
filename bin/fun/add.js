@@ -1,6 +1,22 @@
 import { select, checkbox, number, input, confirm } from 'npm:@inquirer/prompts';
 import { calendar, objects, WriteFile, today} from "../functions.js";
 
+async function inputYM(messageY, messageM) {
+    const year = await number({
+      message: messageY
+    })
+    let month = await number({
+      message: messageM
+    }) - 1;
+    while (month > 11 || month < 0){
+      console.log("month must be less than or equal to 12");
+      month = await number({
+      message: messageM
+    }) - 1;}
+    
+  return [ year, month ];
+}
+
 export async function add() {
   const obj = {
     name: undefined,
@@ -115,47 +131,28 @@ export async function add() {
     obj.endY = obj.startY;
     obj.endM = obj.startM + obj.len;
     while(obj.endM > 11) {
-      obj.endY++
+      obj.endY++;
       obj.endM -= 12;
     }
   } else if (obj.len === "date") {
-    // TODO: shrink ask date prompts into a function
-    // If input by date ask for start
-    // and end dates
-    // Check if numbers are correct
-    obj.startY = await number({
-      message: "Start year in YY format"
-    })
-    do {
-      obj.startM = await number({
-        message: "Start month in MM format"
-      }) - 1;
-      if (obj.startM > 11 || obj.startM < 0){
-        console.log("month must be less than or equal to 12");
-      }
-    } while (obj.startM > 11 || obj.startM < 0)
+  
+    // We need to use an array because the function outputs an array
+    // ant they don't let me use [obj.startY, obj.startM]
+    let arr = []
+    arr = await inputYM("start year in yy format", "start month");
+    obj.startY = arr[0]; obj.startM = arr[1];
     
-    do {
-      obj.endY = await number({
-      message: "End year in YY format"
-      })
-      if (obj.endY < obj.startY) {
-        console.log("end year must be greater or equal to start year");
-      }
-    } while (obj.endY < obj.startY)
-    do {
-      obj.endM = await number({
-        message: "End month in MM format"
-      }) - 1;
-      if (obj.endM > 11 || obj.endM < 0){
-        console.log("month must be less than or equal to 12");
-      }
-      if (obj.endM < obj.startM && obj.endY === obj.startY) {
-        console.log("length less than 0, retry");
-        obj.endM = -1;
-      }
-    } while (obj.endM > 11 || obj.endM < 0 )
+    arr = await inputYM("end year in yy format", "end month");
+    obj.endY = arr[0]; obj.endM = arr[1];
+
     obj.len = (obj.endY * 12 + obj.endM) - (obj.startY * 12 + obj.startM)
+
+    while (obj.len <= 0) {
+      console.log("length < 0, try again!")
+      arr = await inputYM("end year in yy format", "end month");
+      obj.endY = arr[0]; obj.endM = arr[1];
+      obj.len = (obj.endY * 12 + obj.endM) - (obj.startY * 12 + obj.startM)
+    }
   } else {
     // If unknown length, ask for start
     if(await select({
@@ -177,17 +174,8 @@ export async function add() {
       obj.endY = obj.startY;
       obj.endM = obj.startM;
     } else {
-      obj.startY = await number({
-        message: "Start year in YY format"
-      })
-      do {
-        obj.startM = await number({
-          message: "Start month in MM format"
-        }) - 1;
-        if (obj.startM > 11 || obj.startM < 0){
-          console.log("month must be less than or equal to 12");
-        }
-      } while (obj.startM > 11 || obj.startM < 0)
+      arr = await inputYM("start year in yy format", "start month");
+      obj.startY = arr[0]; obj.startM = arr[1];
       obj.endY = obj.startY;
       obj.endM = obj.startM;
     }
