@@ -4,13 +4,15 @@ import { add } from './fun/add.js';
 import { set } from './fun/set.js';
 import { status } from './fun/status.js';
 import { createData } from './fun/createData.js';
-
+import { check } from './fun/check.js';
+import { endObj } from './fun/endObj.js';
 
 console.clear();
 console.log("Welcome to the WZ's money tracker");
 console.log("This is a simple app made to visualy represent buissness expenses and income, past and future");
 //console.log(`version: ${version}`)
 
+check()
 
 // first question
 const action = await select({
@@ -29,6 +31,10 @@ const action = await select({
       description: "add a new object"
     },
     {
+      name: "end object", value: "end",
+      description: "end variable length object"
+    },
+    {
       name: "create data", value: "create data",
       description: "create an html file in the current dir, where you can view your stats"
     },
@@ -38,14 +44,17 @@ const action = await select({
 
 
 switch (action) {
-  case "add":
-    await add();
+  case "status":
+    status();
     break;
   case "set value":
     await set();
     break;
-  case "status":
-    status();
+  case "add":
+    await add();
+    break;
+  case "end":
+    await endObj();
     break;
   case "create data":
     await createData();

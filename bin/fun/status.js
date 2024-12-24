@@ -29,11 +29,11 @@ export function status() {
   nextMonth.forEach((obj) => {(obj.val < 0) ? nextMonthArr[2] += obj.val : {}});
 
   lastMonthArr[3] = (month== 0) ? year - 1: year;
-  lastMonthArr[4] = 1 + (month== 0) ? 11 : month -1;
+  lastMonthArr[4] = (month== 0) ? 12 : month;
   thisMonthArr[3] = year;
   thisMonthArr[4] = 1 + month;
   nextMonthArr[3] = (month==11) ? year + 1: year;
-  nextMonthArr[4] = 1 + (month==11) ?  0 : month;
+  nextMonthArr[4] = (month==11) ?  1 : month+1;
 
   function Month(arr) {
     this.net      = arr[0];
