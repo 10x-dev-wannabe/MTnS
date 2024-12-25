@@ -31,7 +31,8 @@ new Chart(ctx, {
         grid: {
           color: "#ffffffA0",
           lineWidth: 2
-        }
+        },
+        beginAtZero: true
       }
     },
     plugins: {
@@ -82,7 +83,8 @@ years.forEach((val, index) => {
             grid: {
               color: "#ffffffE0",
               lineWidth: 2.5
-            }
+            },
+            beginAtZero: true
           }
         },
         plugins: {
