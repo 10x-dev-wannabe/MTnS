@@ -83,10 +83,17 @@ export async function createData() {
     const dataset = 
       {
         label: object.name,
-        borderColor: color
+        borderColor: color,
+        pointRadius: 7,
+        pointBackgroundColor: color+"C0",
+        pointBorderWidth: 1,
       };
     if (object.type == "expense") {
-      dataset.borderDash = [30, 30]
+      dataset.borderDash = [20, 20];
+      dataset.pointStyle = "rectRot";
+      dataset.pointBorderColor = "#eee";
+    } else {
+      dataset.pointBackgroundColor = color+"90"
     }
     const allData = [];
     
@@ -107,6 +114,9 @@ export async function createData() {
           {
             label: object.name,
             borderColor: color,
+            pointBackgroundColor: color+"C0",
+            pointBorderWidth: 1,
+            pointRadius: 7,
             data: year
           }
         );
@@ -116,12 +126,26 @@ export async function createData() {
           {
             label: object.name,
             borderColor: color,
+            pointBackgroundColor: color+"C0",
+            pointBorderWidth: 1,
+            pointRadius: 7,
             data: year
           }
         )
       }
       if (object.type == "expense") {
-        datasetsByYears[i].at(-1).borderDash = [30, 30];
+        Object.assign(datasetsByYears[i].at(-1),
+          {
+            borderDash: [20, 20],
+            pointStyle: "rectRot",
+            pointBorderColor: "#eee",
+          }
+        )} else {
+        Object.assign(datasetsByYears[i].at(-1),
+          {
+            pointBackgroundColor: color+"90"
+          }
+        )
       }
 
     };
@@ -129,7 +153,14 @@ export async function createData() {
     datasets.push(dataset);
   });
 
-  const total = {label: "total", borderColor: "#FF33F0"};
+  const total = {
+    label: "total",
+    pointBorderColor: "rgba(0, 0, 0, 0)",
+    pointBackgroundColor: "rgba(0, 0, 0, 0)",
+    borderColor: "#FFFFFF80",
+    borderWidth: 10,
+    pointRadius: 15
+  };
   total.data = [];
   for(let i = startY; i < endY; i++) {
     for(let j = 0; j <= 11; j++){
@@ -148,7 +179,17 @@ export async function createData() {
     const yStart = total.data.findIndex((val)     => { return val.x.slice(-4) == `${2000 + index}` } )
     const yEnd   = total.data.findLastIndex((val) => { return val.x.slice(-4) == `${2000 + index}` } )
     const data = total.data.slice(yStart, yEnd+1);
-    datasetsByYears[index].push({label: "total", data: data, borderColor: "#FF33F0"});
+    datasetsByYears[index].push(
+      {
+        label: "total",
+        data: data,
+        pointBorderColor: "rgba(0, 0, 0, 0)",
+        pointBackgroundColor: "rgba(0, 0, 0, 0)",
+        borderColor: "#FFFFFF80",
+        borderWidth: 10,
+        pointRadius: 15
+      }
+    )
   })
 
   datasetsByYears = datasetsByYears.filter((val) => {return val != null});
