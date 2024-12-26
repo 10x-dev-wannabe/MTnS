@@ -30,7 +30,8 @@ try {
   WriteFile(calendar, "data/calendar.json");
 }
 
+let oneTimeObj = ReadFile("data/oneTimeObj.json");
 let objects = ReadFile("data/objects.json");
 const today = new Date();
 
-export { ReadFile, WriteFile, calendar, objects, today };
+export { ReadFile, WriteFile, calendar, objects, oneTimeObj, today };

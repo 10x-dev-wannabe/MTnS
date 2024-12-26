@@ -36,6 +36,12 @@ new Chart(ctx, {
       }
     },
     plugins: {
+      legend: {
+        labels: {
+        filter: function(item) {
+          return item.lineWidth != 0;
+        }}
+      },
       title: {
         display: true,
         text: "All time record",
@@ -88,6 +94,13 @@ years.forEach((val, index) => {
           }
         },
         plugins: {
+          legend: {
+            labels: {
+              filter: function(item) {
+                return item.lineWidth != 0;
+              }
+            }
+          },
           title: {
             display: true,
             text: yearLbl[0].substring(5),

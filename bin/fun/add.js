@@ -1,5 +1,5 @@
 import { select, checkbox, number, input, confirm } from 'npm:@inquirer/prompts';
-import { calendar, objects, WriteFile, today} from "../functions.js";
+import { calendar, objects, oneTimeObj, WriteFile, today} from "../functions.js";
 
 async function inputYM(messageY, messageM) {
     const year = await number({
@@ -35,19 +35,50 @@ export async function add() {
   }) 
   
   obj.var = await select({
-    message: "Is it variable",
+    message: "Type of object:",
     choices: [
       {
-        name: "fixed", value: "fixed",
+        name: "one time", value: "one",
+        description: "one time money"
+      },
+      {
+        name: "fixed recurring", value: "fixed",
         description: "you pay/get the same ammount every time"
       },
       {
-        name: "variable", value: "variable",
+        name: "variable recurring", value: "variable",
         description: "changes value from month to month"
       }
     ]
   })
   
+  if (obj.var === "one") {
+    obj.val = await number({
+      message: "value of object"
+    })
+    if(await select({
+      message: "On what date?",
+      choices: [
+        {
+          name: "This month", value: true,
+          description: "Set start date as this month"
+        },
+        {
+          name: "Set date", value: false,
+          description: "Manualy set the date"
+        }
+      ]
+    }
+    )) {
+      obj.startY = today.getFullYear() - 2000;
+      obj.startM = today.getMonth();
+    } else {
+      const arr = await inputYM("Year in yy format", "month");
+      obj.startY = arr[0]; obj.startM = arr[1];
+    }
+    oneTimeObj.push(obj);
+    WriteFile(oneTimeObj, "data/oneTimeObj.json");
+  } else {
   if (obj.var === "fixed") {
     obj.val = await number({
       message: "input value of each payment"
@@ -66,8 +97,7 @@ export async function add() {
     ]
   })
   
-  // Get on which months of year
-  // will the money be added
+  // Get on which months of year will the money be added
   obj.month = await select({
     message: "How often?",
     choices: [
@@ -219,4 +249,5 @@ export async function add() {
   }
 
   WriteFile(calendar, "data/calendar.json");
+}
 }

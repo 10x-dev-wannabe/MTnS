@@ -1,4 +1,4 @@
-import { calendar, objects, WriteFile} from "../functions.js";
+import { calendar, objects, oneTimeObj, WriteFile} from "../functions.js";
 import * as esbuild from "https://deno.land/x/esbuild@v0.24.1/mod.js";
 
 // Shout out to saintianonavyie from https://gist.github.com/mucar/3898821
@@ -192,6 +192,24 @@ export async function createData() {
     )
   })
 
+  oneTimeObj.forEach((obj) => {
+    const color = Colors[Math.floor(Math.random()*280)];
+    const point = {
+      label: obj.name,
+      data: [{x: `${obj.startM+1} // ${2000+obj.startY}`, y: Math.abs(obj.val)}],
+      borderWidth: 0,
+      pointBackgroundColor: color+"C0",
+      pointBorderWidth: 3,
+      pointBorderColor: "#ccc",
+      pointRadius: 15,
+      pointStyle: "star",
+    }
+    if (obj.val < 0) {
+      point.pointStyle = "triangle";
+    }
+    datasets.push(point);
+    datasetsByYears[obj.startY].push(point);
+  })
   datasetsByYears = datasetsByYears.filter((val) => {return val != null});
 
   WriteFile(datasetsByYears, "chartData/years.json");
