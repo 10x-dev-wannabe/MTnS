@@ -196,6 +196,7 @@ export async function createData() {
     console.log("\x1b[32m", "Chart generated successfully");
   } catch {
     console.log("\x1b[31m", "failed to generate charts");
+    console.log("\x1b[36m", "make sure you are in the root dir of app");
     console.log("\x1b[31m", "please start an issue on GitHub if you can't find the problem");
   }
 }
