@@ -1,4 +1,4 @@
-import { calendar, objects, ReadFile, today, WriteFile } from "../functions.js";
+import { objects } from "../functions.js";
 import { select } from "npm:@inquirer/prompts";
 
 export async function endObj() {
@@ -19,5 +19,7 @@ export async function endObj() {
   });
   const obj = objects[objId];
   obj.len = (obj.endY * 12 + obj.endM) - (obj.startY * 12 + obj.startM);
-  console.log(`ended auto extension of object ${obj.name}, length is ${obj.len}`);
+  console.log(
+    `ended auto extension of object ${obj.name}, length is ${obj.len}`,
+  );
 }

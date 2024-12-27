@@ -1,123 +1,123 @@
-import lbl from './labels.json';
-import datasets from './data.json';
-import years from './years.json';
-
+import lbl from "./labels.json";
+import datasets from "./data.json";
+import years from "./years.json";
 
 Chart.defaults.datasets.line.borderWidth = 5;
 Chart.defaults.font.size = 20;
 Chart.defaults.font.weight = 700;
-Chart.defaults.color = '#fff';
+Chart.defaults.color = "#fff";
 
-const ctx = document.getElementById('myChart');
+const ctx = document.getElementById("myChart");
 new Chart(ctx, {
-  type: 'line',
-  data: { 
+  type: "line",
+  data: {
     labels: lbl,
-    datasets: datasets
+    datasets: datasets,
   },
   options: {
     scales: {
       x: {
         ticks: {
           display: true,
-          autoSkip: false
+          autoSkip: false,
         },
         grid: {
           color: "#ffffffA0",
-          lineWidth: 2
-        }
+          lineWidth: 2,
+        },
       },
       y: {
         grid: {
           color: "#ffffffA0",
-          lineWidth: 2
+          lineWidth: 2,
         },
-        beginAtZero: true
-      }
+        beginAtZero: true,
+      },
     },
     plugins: {
       legend: {
         labels: {
-        filter: function(item) {
-          return item.lineWidth != 0;
-        }}
+          filter: function (item) {
+            return item.lineWidth != 0;
+          },
+        },
       },
       title: {
         display: true,
         text: "All time record",
         align: "start",
         font: {
-          size: 50
-        }
-      }
+          size: 50,
+        },
+      },
     },
     maintainAspectRatio: false,
     responsive: true,
-  }
+  },
 });
 
 let yearChartDiv = document.getElementById("chartsByYear");
 years.forEach((val, index) => {
   if (val != null) {
-    let yearLbl = lbl.slice(index*12, index*12+12);
+    let yearLbl = lbl.slice(index * 12, index * 12 + 12);
     let newCanvas = document.createElement("canvas");
     let newDiv = document.createElement("div");
-    newDiv.className = 'yearDiv';
+    newDiv.className = "yearDiv";
     newCanvas.id = index;
-    newCanvas.className = 'yearChart';
+    newCanvas.className = "yearChart";
     newDiv.appendChild(newCanvas);
     yearChartDiv.appendChild(newDiv);
     new Chart(newCanvas, {
-      type: 'line',
+      type: "line",
       data: {
         labels: yearLbl,
-        datasets: val
+        datasets: val,
       },
       options: {
         scales: {
           x: {
             ticks: {
               display: true,
-              autoSkip: false
+              autoSkip: false,
             },
             grid: {
               color: "#ffffffE0",
-              lineWidth: 2.5
-            }
+              lineWidth: 2.5,
+            },
           },
           y: {
             grid: {
               color: "#ffffffE0",
-              lineWidth: 2.5
+              lineWidth: 2.5,
             },
-            beginAtZero: true
-          }
+            beginAtZero: true,
+          },
         },
         plugins: {
           legend: {
             labels: {
-              filter: function(item) {
+              filter: function (item) {
                 return item.lineWidth != 0;
-              }
-            }
+              },
+            },
           },
           title: {
             display: true,
             text: yearLbl[0].substring(5),
             align: "start",
             font: {
-              size: 35
-            }
-          }
+              size: 35,
+            },
+          },
         },
         layout: {
           padding: {
-            top: 200
-          }
+            top: 200,
+          },
         },
         maintainAspectRatio: false,
         responsive: true,
-      }
+      },
     });
   }
-})
+});

@@ -1,6 +1,5 @@
 import { calendar, today} from "../functions.js";
 
-
 export function status() {
   const year  = today.getFullYear() - 2000;
   const month = today.getMonth();

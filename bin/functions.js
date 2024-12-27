@@ -17,16 +17,16 @@ try {
 } catch {
   // If file is not yet generated,
   // make an array containing arrays
-  // representing 
+  // representing
   // each year containg 12 arrys
   // representing months
   calendar = [];
-  for(let i = 0; i < 100; i++){
+  for (let i = 0; i < 100; i++) {
     calendar.push([]);
-    for(let x = 0; x < 12; x++){
+    for (let x = 0; x < 12; x++) {
       calendar[i].push([]);
     }
-  } 
+  }
   WriteFile(calendar, "data/calendar.json");
 }
 
@@ -34,4 +34,4 @@ let oneTimeObj = ReadFile("data/oneTimeObj.json");
 let objects = ReadFile("data/objects.json");
 const today = new Date();
 
-export { ReadFile, WriteFile, calendar, objects, oneTimeObj, today };
+export { calendar, objects, oneTimeObj, today, ReadFile, WriteFile };
