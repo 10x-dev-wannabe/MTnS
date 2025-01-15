@@ -190,7 +190,8 @@ export async function createData() {
     return val != null;
   });
 
-  WriteFile(datasetsByYears, "chartData/years.json");
+  Deno.writeTextFileSync(`${import.meta.dirname}/../chartData/years.json`, JSON.stringify(datasetsByYears));
+  //WriteFile(datasetsByYears, "chartData/years.json");
   WriteFile(datasets, "chartData/data.json");
   WriteFile(labels, "chartData/labels.json");
 
