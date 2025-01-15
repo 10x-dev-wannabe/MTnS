@@ -158,7 +158,7 @@ export async function createData() {
         data: data,
         pointBorderColor: "rgba(0, 0, 0, 0)",
         pointBackgroundColor: "rgba(0, 0, 0, 0)",
-        ///        borderColor: "#FFFFFF80",
+        borderColor: "#FFFFFF80",
         borderWidth: 10,
         pointRadius: 15,
       },
