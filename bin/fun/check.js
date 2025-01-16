@@ -45,7 +45,7 @@ export function check() {
       }
     }
 
-    WriteFile(calendar, "data/calendar.json");
+    WriteFile(calendar, "calendar.json");
 
     if (year > objects[objId].endY) {
       console.log("also modifying end year and month");
@@ -55,6 +55,6 @@ export function check() {
       console.log("also modifying end month");
       objects[objId].endM = month;
     }
-    WriteFile(objects, "data/objects.json");
+    WriteFile(objects, "objects.json");
   });
 }

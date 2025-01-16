@@ -80,7 +80,7 @@ export async function add() {
       obj.startM = arr[1];
     }
     oneTimeObj.push(obj);
-    WriteFile(oneTimeObj, "data/oneTimeObj.json");
+    WriteFile(oneTimeObj, "oneTimeObj.json");
   } else {
     if (obj.var === "fixed") {
       obj.val = await number({
@@ -233,7 +233,7 @@ export async function add() {
 
     obj.id = objects.length;
     objects.push(obj);
-    WriteFile(objects, "data/objects.json");
+    WriteFile(objects, "objects.json");
 
     // j is to iterate over months
     // K is to keep track of length
@@ -261,6 +261,6 @@ export async function add() {
       );
     }
 
-    WriteFile(calendar, "data/calendar.json");
+    WriteFile(calendar, "calendar.json");
   }
 }

@@ -1,4 +1,4 @@
-import { select } from 'npm:@inquirer/prompts';
+import { select, input } from 'npm:@inquirer/prompts';
 
 import { add } from './fun/add.js';
 import { set } from './fun/set.js';
@@ -7,14 +7,14 @@ import { createData } from './fun/createData.js';
 import { check } from './fun/check.js';
 import { endObj } from './fun/endObj.js';
 
+// The prompt for which file to use is inside functions.js
+
 console.clear();
 console.log("Welcome to the WZ's money tracker");
 console.log("This is a simple app made to visualy represent buissness expenses and income, past and future");
 //console.log(`version: ${version}`)
 
 check()
-
-// first question
 const action = await select({
   message: "Select an action",
   choices: [

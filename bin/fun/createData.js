@@ -1,4 +1,4 @@
-import { calendar, objects, oneTimeObj, WriteFile } from "../functions.js";
+import { calendar, objects, oneTimeObj } from "../functions.js";
 import * as esbuild from "https://deno.land/x/esbuild@v0.24.1/mod.js";
 
 //deno-fmt-ignore
@@ -190,10 +190,9 @@ export async function createData() {
     return val != null;
   });
 
-  Deno.writeTextFileSync(`${import.meta.dirname}/../chartData/years.json`, JSON.stringify(datasetsByYears));
-  //WriteFile(datasetsByYears, "chartData/years.json");
-  WriteFile(datasets, "chartData/data.json");
-  WriteFile(labels, "chartData/labels.json");
+  Deno.writeTextFileSync(`${import.meta.dirname}/../../chartData/years.json`, JSON.stringify(datasetsByYears));
+  Deno.writeTextFileSync(`${import.meta.dirname}/../../chartData/data.json` , JSON.stringify(datasets));
+  Deno.writeTextFileSync(`${import.meta.dirname}/../../chartData/labels.json`, JSON.stringify(labels));
 
   console.log("Making chart data with esbuild...");
   try {

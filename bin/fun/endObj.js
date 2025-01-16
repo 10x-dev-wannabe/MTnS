@@ -1,4 +1,4 @@
-import { objects } from "../functions.js";
+import { objects, WriteFile } from "../functions.js";
 import { select } from "npm:@inquirer/prompts";
 
 export async function endObj() {
@@ -22,4 +22,5 @@ export async function endObj() {
   console.log(
     `ended auto extension of object ${obj.name}, length is ${obj.len}`,
   );
+  WriteFile(objects, "objects.json");
 }

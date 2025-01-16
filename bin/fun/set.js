@@ -78,7 +78,7 @@ export async function set() {
     }
   }
 
-  WriteFile(calendar, "data/calendar.json");
+  WriteFile(calendar, "calendar.json");
 
   if (year < objects[objId].startY) {
     console.log("also modifying start year and month");
@@ -97,5 +97,5 @@ export async function set() {
     console.log("also modifying end month");
     objects[objId].endM = month;
   }
-  WriteFile(objects, "data/objects.json");
+  WriteFile(objects, "objects.json");
 }
