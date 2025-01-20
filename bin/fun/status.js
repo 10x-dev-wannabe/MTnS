@@ -32,7 +32,7 @@ export function status() {
   thisMonthArr[3] = year;
   thisMonthArr[4] = 1 + month;
   nextMonthArr[3] = (month==11) ? year + 1: year;
-  nextMonthArr[4] = (month==11) ?  1 : month+1;
+  nextMonthArr[4] = (month==11) ?  1 : month+2;
 
   function Month(arr) {
     this.net      = arr[0];

@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@inquirer/prompts": "^7.1.0"
+    "@inquirer/prompts": "^7.1.0",
+    "simple-crypto-js": "^3.0.1"
   }
 }

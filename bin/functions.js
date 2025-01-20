@@ -1,5 +1,5 @@
-import { select, input } from 'npm:@inquirer/prompts';
-
+import { select, input, password} from 'npm:@inquirer/prompts';
+import  { SimpleCrypto } from "npm:simple-crypto-js";
 
 // This is where you select the file to use, I know it would have been less
 // confusing if it was in main.js but this was just more simple.
@@ -13,6 +13,9 @@ let file = await select({
   choices: saveFiles
 })
 
+let pswd = await password({message: "Password:"});
+const crypto = new SimpleCrypto(pswd);
+
 if (file === "new") {
   const name = await input({message: "name of file"});
   await Deno.mkdir(`${import.meta.dirname}/../data/${name}`);
@@ -25,23 +28,25 @@ if (file === "new") {
     for (let x = 0; x < 12; x++) {
       calendar[i].push([]);
     }
-  }
-  Deno.writeTextFileSync(`${import.meta.dirname}/../data/${name}/calendar.json`  , JSON.stringify(calendar))
-  Deno.writeTextFileSync(`${import.meta.dirname}/../data/${name}/objects.json`   , "[]");
-  Deno.writeTextFileSync(`${import.meta.dirname}/../data/${name}/oneTimeObj.json`, "[]");
+  } 
+  Deno.writeTextFileSync(`${import.meta.dirname}/../data/${name}/calendar.json`  , crypto.encrypt(JSON.stringify(calendar)))
+  Deno.writeTextFileSync(`${import.meta.dirname}/../data/${name}/objects.json`   , crypto.encrypt("[]"));
+  Deno.writeTextFileSync(`${import.meta.dirname}/../data/${name}/oneTimeObj.json`, crypto.encrypt("[]"));
   file = name;
 }
+
 
 function ReadFile(path) {
   let data;
   data = Deno.readTextFileSync(`${import.meta.dirname}/../data/${file}/${path}`);
-  data = JSON.parse(data);
+  data = crypto.decrypt(data);
   return data;
 }
 
 function WriteFile(obj, path) {
   let data;
   data = JSON.stringify(obj);
+  data = crypto.encrypt(data);
   Deno.writeTextFileSync(`${import.meta.dirname}/../data/${file}/${path}`, data);
 }
 
