@@ -7,7 +7,7 @@ const saveFiles = [];
 for await (const dirEntry of Deno.readDir(`${import.meta.dirname}/../data/`)) {
   saveFiles.push({ name: dirEntry.name, value: dirEntry.name});
 };
-saveFiles.push({name: "\x1b[33madd a new file\x1b", value: "new"})
+saveFiles.push({name: "\x1b[33madd a new file", value: "new"})
 let file = await select({
   message: "What file to use?",
   choices: saveFiles

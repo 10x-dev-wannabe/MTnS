@@ -137,6 +137,13 @@ export async function createData() {
       calendar[i][j].forEach((obj) => {
         val += obj.val;
       });
+      oneTimeObj.forEach((obj) => {
+        if (
+          obj.startY === i && obj.startM === j
+        ) {
+          val += obj.val;
+        }
+      });
       if (val != 0) {
         total.data.push({ x: `${j + 1} // ${2000 + i}`, y: val });
       }
@@ -190,9 +197,18 @@ export async function createData() {
     return val != null;
   });
 
-  Deno.writeTextFileSync(`${import.meta.dirname}/../../chartData/years.json`, JSON.stringify(datasetsByYears));
-  Deno.writeTextFileSync(`${import.meta.dirname}/../../chartData/data.json` , JSON.stringify(datasets));
-  Deno.writeTextFileSync(`${import.meta.dirname}/../../chartData/labels.json`, JSON.stringify(labels));
+  Deno.writeTextFileSync(
+    `${import.meta.dirname}/../../chartData/years.json`,
+    JSON.stringify(datasetsByYears),
+  );
+  Deno.writeTextFileSync(
+    `${import.meta.dirname}/../../chartData/data.json`,
+    JSON.stringify(datasets),
+  );
+  Deno.writeTextFileSync(
+    `${import.meta.dirname}/../../chartData/labels.json`,
+    JSON.stringify(labels),
+  );
 
   console.log("Making chart data with esbuild...");
   try {
