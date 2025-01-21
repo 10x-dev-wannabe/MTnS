@@ -39,7 +39,12 @@ if (file === "new") {
 function ReadFile(path) {
   let data;
   data = Deno.readTextFileSync(`${import.meta.dirname}/../data/${file}/${path}`);
-  data = crypto.decrypt(data);
+  try {
+    data = crypto.decrypt(data);
+  } catch {
+    console.log("\x1b[31mWrongPassword!")
+    Deno.exit()
+  }
   return data;
 }
 
