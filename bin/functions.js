@@ -13,7 +13,7 @@ let file = await select({
   choices: saveFiles
 })
 
-let pswd = await password({message: "Password:"});
+const pswd = await password({message: "Password:"});
 const crypto = new SimpleCrypto(pswd);
 
 if (file === "new") {
