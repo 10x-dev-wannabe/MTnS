@@ -62,6 +62,7 @@ export async function createData() {
       dataset.borderDash = [20, 20];
       dataset.pointStyle = "rectRot";
       dataset.pointBorderColor = "#eee";
+      dataset.label += "#";
     } else {
       dataset.pointBackgroundColor = color + "90";
     }
@@ -189,6 +190,7 @@ export async function createData() {
     };
     if (obj.val < 0) {
       point.pointStyle = "triangle";
+      point.label += "#";
     }
     datasets.push(point);
     datasetsByYears[obj.startY].push(point);

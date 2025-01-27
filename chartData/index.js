@@ -50,12 +50,27 @@ new Chart(ctx, {
           size: 50,
         },
       },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            //If the label has the negative suffix, remove it and invert the number
+            if (context.dataset.label.slice(-1) === "#") {
+              tooltip = `${context.dataset.label.slice(0, -1)}: ${context.formattedValue*-1}`;
+            } else {
+              tooltip = `${context.dataset.label}: ${context.formattedValue}`;
+            }
+            return tooltip;
+          }
+        }
+      }
     },
     maintainAspectRatio: false,
     responsive: true,
+    interaction: {
+      mode: 'x'
+    }
   },
 });
-
 let yearChartDiv = document.getElementById("chartsByYear");
 years.forEach((val, index) => {
   if (val != null) {
@@ -109,6 +124,19 @@ years.forEach((val, index) => {
               size: 35,
             },
           },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                //If the label has the negative suffix, remove it and invert the number
+                if (context.dataset.label.slice(-1) === "#") {
+                  tooltip = `${context.dataset.label.slice(0, -1)}: ${context.formattedValue*-1}`;
+                } else {
+                  tooltip = `${context.dataset.label}: ${context.formattedValue}`;
+                }
+                return tooltip;
+              }
+            }
+          }
         },
         layout: {
           padding: {
@@ -117,6 +145,9 @@ years.forEach((val, index) => {
         },
         maintainAspectRatio: false,
         responsive: true,
+        interaction: {
+          mode: 'x'
+        }
       },
     });
   }
