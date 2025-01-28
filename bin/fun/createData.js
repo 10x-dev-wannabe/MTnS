@@ -57,12 +57,14 @@ export async function createData() {
       pointRadius: 7,
       pointBackgroundColor: color + "C0",
       pointBorderWidth: 1,
+      spanGaps: 1,
     };
     if (object.type == "expense") {
       dataset.borderDash = [20, 20];
       dataset.pointStyle = "rectRot";
       dataset.pointBorderColor = "#eee";
       dataset.label += "#";
+      object.name += "#";
     } else {
       dataset.pointBackgroundColor = color + "90";
     }
@@ -91,6 +93,7 @@ export async function createData() {
             pointBackgroundColor: color + "C0",
             pointBorderWidth: 1,
             pointRadius: 7,
+            spanGaps: 1,
             data: year,
           },
         );
@@ -103,6 +106,7 @@ export async function createData() {
             pointBackgroundColor: color + "C0",
             pointBorderWidth: 1,
             pointRadius: 7,
+            spanGaps: 1,
             data: year,
           },
         );
@@ -136,13 +140,13 @@ export async function createData() {
     for (let j = 0; j <= 11; j++) {
       let val = 0;
       calendar[i][j].forEach((obj) => {
-        val += obj.val;
+        val += Number(obj.val);
       });
       oneTimeObj.forEach((obj) => {
         if (
           obj.startY === i && obj.startM === j
         ) {
-          val += obj.val;
+          val += Number(obj.val);
         }
       });
       if (val != 0) {

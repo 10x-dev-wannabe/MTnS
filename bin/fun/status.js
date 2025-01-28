@@ -18,23 +18,25 @@ export function status() {
   const nextMonthArr = [0, 0, 0, 0, 0];
 
   lastMonth.forEach((obj) => {
-    lastMonthArr[0] += obj.val;
+    lastMonthArr[0] += Number(obj.val);
   });
   thisMonth.forEach((obj) => {
-    thisMonthArr[0] += obj.val;
+    thisMonthArr[0] += Number(obj.val);
   });
   nextMonth.forEach((obj) => {
-    nextMonthArr[0] += obj.val;
+    nextMonthArr[0] += Number(obj.val);
   });
 
+  // Sooooo..... I need to specify it's a number EVERY TIME?!
+  // tf is wrong with this language...
   lastMonth.forEach((obj) => {
-    (obj.val > 0) ? lastMonthArr[1] += obj.val : lastMonthArr[2] += obj.val;
+    (obj.val > 0) ? lastMonthArr[1] += Number(obj.val) : lastMonthArr[2] += Number(obj.val);
   });
   thisMonth.forEach((obj) => {
-    (obj.val > 0) ? thisMonthArr[1] += obj.val : thisMonthArr[2] += obj.val;
+    (obj.val > 0) ? thisMonthArr[1] += Number(obj.val) : thisMonthArr[2] += Number(obj.val);
   });
   nextMonth.forEach((obj) => {
-    (obj.val > 0) ? nextMonthArr[1] += obj.val : nextMonthArr[2] += obj.val;
+    (obj.val > 0) ? nextMonthArr[1] += Number(obj.val) : nextMonthArr[2] += Number(obj.val);
   });
 
   lastMonthArr[3] = (month == 0) ? year - 1 : year;
