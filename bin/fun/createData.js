@@ -49,78 +49,80 @@ export async function createData() {
   // add a data point to the data set, then
   // add it to the array with all the datasets
   objects.forEach((object) => {
-    // Get a random color from the random color array
-    const color = Colors[Math.floor(Math.random() * 30)];
-    const dataset = {
-      label: object.name,
-      borderColor: color,
-      pointRadius: 7,
-      pointBackgroundColor: color + "C0",
-      pointBorderWidth: 1,
-    };
-    if (object.type == "expense") {
-      dataset.borderDash = [20, 20];
-      dataset.pointStyle = "rectRot";
-      dataset.pointBorderColor = "#eee";
-      dataset.label += "#";
-    } else {
-      dataset.pointBackgroundColor = color + "90";
-    }
-    const allData = [];
-
-    // Iterate over every month and push the object value
-    // to it's dataset
-    for (let i = object.startY; i <= object.endY; i++) {
-      const year = [];
-      for (let j = 0; j <= 11; j++) {
-        calendar[i][j].forEach((obj) => {
-          if (obj.id == object.id) {
-            allData.push({
-              x: `${j + 1} // ${2000 + i}`,
-              y: Math.abs(obj.val),
-            });
-            year.push({ x: `${j + 1} // ${2000 + i}`, y: Math.abs(obj.val) });
-          }
-        });
-      }
-      try {
-        datasetsByYears[i].push(
-          {
-            label: object.name,
-            borderColor: color,
-            pointBackgroundColor: color + "C0",
-            pointBorderWidth: 1,
-            pointRadius: 7,
-            data: year,
-          },
-        );
-      } catch {
-        datasetsByYears[i] = [];
-        datasetsByYears[i].push(
-          {
-            label: object.name,
-            borderColor: color,
-            pointBackgroundColor: color + "C0",
-            pointBorderWidth: 1,
-            pointRadius: 7,
-            data: year,
-          },
-        );
-      }
+    if (object !== 0) {
+      const color = Colors[Math.floor(Math.random() * 30)];
+      const dataset = {
+        label: object.name,
+        borderColor: color,
+        pointRadius: 7,
+        pointBackgroundColor: color + "C0",
+        pointBorderWidth: 1,
+      };
       if (object.type == "expense") {
-        Object.assign(datasetsByYears[i].at(-1), {
-          borderDash: [20, 20],
-          pointStyle: "rectRot",
-          pointBorderColor: "#eee",
-        });
+        dataset.borderDash = [20, 20];
+        dataset.pointStyle = "rectRot";
+        dataset.pointBorderColor = "#eee";
+        dataset.label += "#";
       } else {
-        Object.assign(datasetsByYears[i].at(-1), {
-          pointBackgroundColor: color + "90",
-        });
+        dataset.pointBackgroundColor = color + "90";
       }
+      const allData = [];
+
+      // Iterate over every month and push the object value
+      // to it's dataset
+      for (let i = object.startY; i <= object.endY; i++) {
+        const year = [];
+        for (let j = 0; j <= 11; j++) {
+          calendar[i][j].forEach((obj) => {
+            if (obj.id == object.id) {
+              allData.push({
+                x: `${j + 1} // ${2000 + i}`,
+                y: Math.abs(obj.val),
+              });
+              year.push({ x: `${j + 1} // ${2000 + i}`, y: Math.abs(obj.val) });
+            }
+          });
+        }
+        try {
+          datasetsByYears[i].push(
+            {
+              label: object.name,
+              borderColor: color,
+              pointBackgroundColor: color + "C0",
+              pointBorderWidth: 1,
+              pointRadius: 7,
+              data: year,
+            },
+          );
+        } catch {
+          datasetsByYears[i] = [];
+          datasetsByYears[i].push(
+            {
+              label: object.name,
+              borderColor: color,
+              pointBackgroundColor: color + "C0",
+              pointBorderWidth: 1,
+              pointRadius: 7,
+              data: year,
+            },
+          );
+        }
+        if (object.type == "expense") {
+          Object.assign(datasetsByYears[i].at(-1), {
+            borderDash: [20, 20],
+            pointStyle: "rectRot",
+            pointBorderColor: "#eee",
+          });
+        } else {
+          Object.assign(datasetsByYears[i].at(-1), {
+            pointBackgroundColor: color + "90",
+          });
+        }
+      }
+      // Get a random color from the random color array
+      dataset.data = allData;
+      datasets.push(dataset);
     }
-    dataset.data = allData;
-    datasets.push(dataset);
   });
 
   const total = {

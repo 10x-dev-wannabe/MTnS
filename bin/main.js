@@ -2,6 +2,7 @@ import { select, input } from 'npm:@inquirer/prompts';
 
 import { add } from './fun/add.js';
 import { set } from './fun/set.js';
+import { del } from './fun/delete.js';
 import { status } from './fun/status.js';
 import { createData } from './fun/createData.js';
 import { check } from './fun/check.js';
@@ -27,8 +28,12 @@ const action = await select({
       desription: "set the value of a variable object"
     },
     {
-      name: "add", value: "add",
+      name: "add object", value: "add",
       description: "add a new object"
+    },
+    {
+      name: "delete object", value: "delete",
+      description: "delete an object"
     },
     {
       name: "end object", value: "end",
@@ -52,6 +57,9 @@ switch (action) {
     break;
   case "add":
     await add();
+    break;
+  case "delete":
+    await del();
     break;
   case "end":
     await endObj();
