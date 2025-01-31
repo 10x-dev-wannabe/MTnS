@@ -34,7 +34,6 @@ export async function del() {
     for (let i = object.startY; i <= object.endY; i++) {
       for (let j = 0; j <= 11; j++) {
         for (const k in calendar[i][j]) {
-          console.log(k)
           if (object.id == calendar[i][j][k].id) {
             calendar[i][j].splice(k, 1);
           }
