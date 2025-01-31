@@ -7,6 +7,7 @@ Chart.defaults.font.size = 20;
 Chart.defaults.font.weight = 700;
 Chart.defaults.color = "#fff";
 
+
 const ctx = document.getElementById("myChart");
 new Chart(ctx, {
   type: "line",
@@ -38,6 +39,9 @@ new Chart(ctx, {
       legend: {
         labels: {
           filter: function (item) {
+            if (item.text.slice(-1) === "#"){
+              item.text = item.text.slice(0, -1);
+            }
             return item.lineWidth != 0;
           },
         },
@@ -55,7 +59,7 @@ new Chart(ctx, {
           label: function(context) {
             //If the label has the negative suffix, remove it and invert the number
             if (context.dataset.label.slice(-1) === "#") {
-              tooltip = `${context.dataset.label.slice(0, -1)}: ${context.formattedValue*-1}`;
+              tooltip = `${context.dataset.label.slice(0, -1)}: ${"-"+context.formattedValue}`;
             } else {
               tooltip = `${context.dataset.label}: ${context.formattedValue}`;
             }
@@ -112,6 +116,9 @@ years.forEach((val, index) => {
           legend: {
             labels: {
               filter: function (item) {
+                if (item.text.slice(-1) === "#"){
+                  item.text = item.text.slice(0, -1);
+                }
                 return item.lineWidth != 0;
               },
             },
@@ -129,7 +136,7 @@ years.forEach((val, index) => {
               label: function(context) {
                 //If the label has the negative suffix, remove it and invert the number
                 if (context.dataset.label.slice(-1) === "#") {
-                  tooltip = `${context.dataset.label.slice(0, -1)}: ${context.formattedValue*-1}`;
+                  tooltip = `${context.dataset.label.slice(0, -1)}: ${"-"+context.formattedValue}`;
                 } else {
                   tooltip = `${context.dataset.label}: ${context.formattedValue}`;
                 }

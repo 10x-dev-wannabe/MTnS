@@ -59,6 +59,7 @@ export async function createData() {
         pointRadius: 7,
         pointBackgroundColor: color + "C0",
         pointBorderWidth: 1,
+        spanGaps: 1
       };
       if (object.type == "expense") {
         dataset.borderDash = [20, 20];
@@ -93,6 +94,7 @@ export async function createData() {
               pointBackgroundColor: color + "C0",
               pointBorderWidth: 1,
               pointRadius: 7,
+              spanGaps: 1,
               data: year,
             },
           );
@@ -105,6 +107,7 @@ export async function createData() {
               pointBackgroundColor: color + "C0",
               pointBorderWidth: 1,
               pointRadius: 7,
+              spanGaps: 1,
               data: year,
             },
           );
@@ -114,6 +117,7 @@ export async function createData() {
             borderDash: [20, 20],
             pointStyle: "rectRot",
             pointBorderColor: "#eee",
+            label: datasetsByYears[i].at(-1).label+="#"
           });
         } else {
           Object.assign(datasetsByYears[i].at(-1), {
